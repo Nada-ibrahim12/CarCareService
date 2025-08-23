@@ -1,3 +1,5 @@
+package org.os.carcareservice.entity;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,9 +22,9 @@ public class CustomerCar {
     private LocalDateTime createdAt;
 
     // Many cars belong to one car type
-    @ManyToOne
-    @JoinColumn(name = "carTypeID", nullable = false)
-    private CarType carType;
+//    @ManyToOne
+//    @JoinColumn(name = "carTypeID", nullable = false)
+//     private CarType carType;
 
     // Getters & Setters
     public Integer getCarId() {
@@ -56,12 +58,12 @@ public class CustomerCar {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    public CarType getCarType() {
-        return carType;
-    }
-
-    public void setCarType(CarType carType) {
-        this.carType = carType;
-    }
+//
+//    public CarType getCarType() {
+//        return carType;
+//    }
+//
+//    public void setCarType(CarType carType) {
+//        this.carType = carType;
+//    }
 }
