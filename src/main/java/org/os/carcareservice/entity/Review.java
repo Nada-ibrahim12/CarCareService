@@ -24,7 +24,29 @@ public class Review {
 
     private LocalDateTime createdAt;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "request_id", nullable = false) // foreign key in review table
+    private Request request;
+
+    public Review() {
+    }
+
+    public Review(Request request,
+                  int bookingId,
+                  int customerId,
+                  int serviceId,
+                  int rating,
+                  String comments,
+                  LocalDateTime createdAt) {
+        this.request = request;
+        this.bookingId = bookingId;
+        this.customerId = customerId;
+        this.serviceId = serviceId;
+        this.rating = rating;
+        this.comments = comments;
+        this.createdAt = createdAt;
+    }
+
     public int getReviewId() {
         return reviewId;
     }
@@ -41,28 +63,20 @@ public class Review {
         this.bookingId = bookingId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Request getRequest() {
+        return request;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setRequest(Request request) {
+        this.request = request;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getComments() {
@@ -73,11 +87,27 @@ public class Review {
         this.comments = comments;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public int getRating() {
+        return rating;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }
