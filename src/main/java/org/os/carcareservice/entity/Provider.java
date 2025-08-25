@@ -34,6 +34,9 @@ public class Provider extends User {
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Availability> availability = new ArrayList<>();
     // Constructors
     public Provider() {
         super();
@@ -118,6 +121,16 @@ public class Provider extends User {
 
     public void setManagedByAdmin(Admin managedByAdmin) {
         this.managedByAdmin = managedByAdmin;
+    }
+
+    public void addAvailability(Availability availability) {
+        this.availability.add(availability);
+        availability.setProvider(this);
+    }
+
+    public void removeAvailability(Availability availability) {
+        this.availability.remove(availability);
+        availability.setProvider(null);
     }
 
     // Utility methods for bidirectional relationships
