@@ -11,82 +11,91 @@ public class Request {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "requestId", nullable = false)
-    private int requestId;
+    @Column(name = "request_id", nullable = false)
+    private Integer requestId;
 
-    @Column(name = "customerId", nullable = false)
-    private Integer customerId;
+    // 🔹 Many requests belong to one customer
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-    @Column(name = "carId", nullable = false)
-    private Integer carId;
+    // 🔹 Many requests are for one customer car
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", nullable = false)
+    private CustomerCar customerCar;
 
-    @Column(name = "providerId", nullable = false)
-    private Integer providerId;
+    // 🔹 Many requests are handled by one provider
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider provider;
 
-    @Column(name = "serviceId", nullable = false)
-    private Integer serviceId;
+    // 🔹 Many requests are for one service
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", nullable = false)
+    private Service service;
 
     @Column(name = "location", nullable = false, length = 100)
     private String location;
 
-    @Column(name = "estimatedCost", nullable = false, precision = 10, scale = 2)
+    @Column(name = "estimated_cost", nullable = false, precision = 10, scale = 2)
     private BigDecimal estimatedCost;
 
     @Column(name = "status", nullable = false, length = 100)
     private String status;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // 🔹 Request status changes
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RequestStatusChange> statusChanges;
 
+    // 🔹 Reviews for this request
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-
-
-    public int getRequestId() {
+    // --- Getters & Setters ---
+    public Integer getRequestId() {
         return requestId;
     }
 
-    public void setRequestId(int requestId) {
+    public void setRequestId(Integer requestId) {
         this.requestId = requestId;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Integer getCarId() {
-        return carId;
+    public CustomerCar getCustomerCar() {
+        return customerCar;
     }
 
-    public void setCarId(Integer carId) {
-        this.carId = carId;
+    public void setCustomerCar(CustomerCar customerCar) {
+        this.customerCar = customerCar;
     }
 
-    public Integer getProviderId() {
-        return providerId;
+    public Provider getProvider() {
+        return provider;
     }
 
-    public void setProviderId(Integer providerId) {
-        this.providerId = providerId;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
-    public Integer getServiceId() {
-        return serviceId;
+    public Service getService() {
+        return service;
     }
 
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public String getLocation() {

@@ -1,6 +1,7 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,10 +14,6 @@ public class Review {
 
     private int bookingId;
 
-    private int customerId;
-
-    private int serviceId;
-
     private int rating;
 
     @Column(columnDefinition = "TEXT")
@@ -24,90 +21,43 @@ public class Review {
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "request_id", nullable = false) // foreign key in review table
+    // A Review belongs to a Request
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_id", nullable = false)
     private Request request;
 
-    public Review() {
-    }
+    // A Review belongs to a Customer
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-    public Review(Request request,
-                  int bookingId,
-                  int customerId,
-                  int serviceId,
-                  int rating,
-                  String comments,
-                  LocalDateTime createdAt) {
-        this.request = request;
-        this.bookingId = bookingId;
-        this.customerId = customerId;
-        this.serviceId = serviceId;
-        this.rating = rating;
-        this.comments = comments;
-        this.createdAt = createdAt;
-    }
+    // A Review belongs to a Service
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", nullable = false)
+    private Service service;
 
-    public int getReviewId() {
-        return reviewId;
-    }
+    // --- Getters & Setters ---
+    public int getReviewId() { return reviewId; }
+    public void setReviewId(int reviewId) { this.reviewId = reviewId; }
 
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
+    public int getBookingId() { return bookingId; }
+    public void setBookingId(int bookingId) { this.bookingId = bookingId; }
 
-    public int getBookingId() {
-        return bookingId;
-    }
+    public int getRating() { return rating; }
+    public void setRating(int rating) { this.rating = rating; }
 
-    public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
-    }
+    public String getComments() { return comments; }
+    public void setComments(String comments) { this.comments = comments; }
 
-    public Request getRequest() {
-        return request;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
+    public Request getRequest() { return request; }
+    public void setRequest(Request request) { this.request = request; }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public int getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
+    public Service getService() { return service; }
+    public void setService(Service service) { this.service = service; }
 }

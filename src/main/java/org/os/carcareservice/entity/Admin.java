@@ -4,20 +4,18 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "admins")
-public class Admin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "admin_id", nullable = false)
-    private Integer adminId;
+public class Admin extends User {
 
     public Admin() {
+        super();
     }
 
-    public Integer getAdminId() {
-        return adminId;
+    public Admin(String name, String email, String phone, String password) {
+        super(name, email, phone, password);
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 }

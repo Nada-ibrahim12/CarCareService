@@ -1,6 +1,7 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,10 +12,6 @@ public class Enquiry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int enquiryId;
 
-    private int submittedById;
-
-    private String submittedByType;
-
     private String subject;
 
     @Column(columnDefinition = "TEXT")
@@ -24,29 +21,17 @@ public class Enquiry {
 
     private LocalDateTime createdAt;
 
-    // Getters and Setters
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    // Getters & Setters
     public int getEnquiryId() {
         return enquiryId;
     }
 
     public void setEnquiryId(int enquiryId) {
         this.enquiryId = enquiryId;
-    }
-
-    public int getSubmittedById() {
-        return submittedById;
-    }
-
-    public void setSubmittedById(int submittedById) {
-        this.submittedById = submittedById;
-    }
-
-    public String getSubmittedByType() {
-        return submittedByType;
-    }
-
-    public void setSubmittedByType(String submittedByType) {
-        this.submittedByType = submittedByType;
     }
 
     public String getSubject() {
@@ -79,5 +64,13 @@ public class Enquiry {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

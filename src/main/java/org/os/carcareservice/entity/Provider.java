@@ -1,14 +1,12 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "providers")
-public class Provider {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "provider_id", nullable = false)
-    private Integer providerId;
+public class Provider extends User {
 
     @Column(name = "approval_status", nullable = false, length = 50)
     private String approvalStatus;
@@ -17,7 +15,29 @@ public class Provider {
     @Column(name = "profile_details", columnDefinition = "TEXT")
     private String profileDetails;
 
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Service> services = new ArrayList<>();
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Request> requests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notification> notifications = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Admin managedByAdmin;
+
+    // Constructors
     public Provider() {
+        super();
+    }
+
+    public Provider(String name, String email, String phone, String password,
+                    String approvalStatus, String profileDetails) {
+        super(name, email, phone, password);
+        this.approvalStatus = approvalStatus;
+        this.profileDetails = profileDetails;
     }
 
     public Provider(String approvalStatus, String profileDetails) {
@@ -25,14 +45,13 @@ public class Provider {
         this.profileDetails = profileDetails;
     }
 
-    public Integer getProviderId() {
-        return providerId;
+    // Override from User
+    @Override
+    public Role getRole() {
+        return Role.PROVIDER;
     }
 
-    public void setProviderId(Integer providerId) {
-        this.providerId = providerId;
-    }
-
+    // Getters & Setters
     public String getApprovalStatus() {
         return approvalStatus;
     }
@@ -47,5 +66,80 @@ public class Provider {
 
     public void setProfileDetails(String profileDetails) {
         this.profileDetails = profileDetails;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public Admin getManagedByAdmin() {
+        return managedByAdmin;
+    }
+
+    public void setManagedByAdmin(Admin managedByAdmin) {
+        this.managedByAdmin = managedByAdmin;
+    }
+
+    // Utility methods for bidirectional relationships
+//    public void addService(Service service) {
+//        services.add(service);
+//        service.setProvider(this);
+//    }
+//
+//    public void removeService(Service service) {
+//        services.remove(service);
+//        service.setProvider(null);
+//    }
+//
+//    public void addRequest(Request request) {
+//        requests.add(request);
+//        request.setProvider(this);
+//    }
+//
+//    public void removeRequest(Request request) {
+//        requests.remove(request);
+//        request.setProvider(null);
+//    }
+//
+//    public void addNotification(Notification notification) {
+//        notifications.add(notification);
+//        notification.setProvider(this);
+//    }
+//
+//    public void removeNotification(Notification notification) {
+//        notifications.remove(notification);
+//        notification.setProvider(null);
+//    }
+
+    @Override
+    public String toString() {
+        return "Provider{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", phone='" + getPhone() + '\'' +
+                ", approvalStatus='" + approvalStatus + '\'' +
+                ", profileDetails='" + profileDetails + '\'' +
+                '}';
     }
 }

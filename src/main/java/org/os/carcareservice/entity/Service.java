@@ -20,6 +20,12 @@ public class Service {
     @Column(name = "price", precision = 10, scale = 2, nullable = false)
     private BigDecimal servicePrice;
 
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id", nullable = false)
+    private Provider provider;
+
+
     public Service() {}
 
     public Service(String serviceName, String serviceStatus, BigDecimal servicePrice) {
