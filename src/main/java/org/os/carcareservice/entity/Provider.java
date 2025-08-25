@@ -1,6 +1,8 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class Provider extends User {
     @JoinColumn(name = "admin_id")
     private Admin managedByAdmin;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
     // Constructors
     public Provider() {
         super();
@@ -66,6 +72,20 @@ public class Provider extends User {
 
     public void setProfileDetails(String profileDetails) {
         this.profileDetails = profileDetails;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public List<Service> getServices() {
@@ -140,6 +160,19 @@ public class Provider extends User {
                 ", phone='" + getPhone() + '\'' +
                 ", approvalStatus='" + approvalStatus + '\'' +
                 ", profileDetails='" + profileDetails + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
