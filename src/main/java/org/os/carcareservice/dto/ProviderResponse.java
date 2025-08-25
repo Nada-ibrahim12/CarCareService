@@ -14,4 +14,14 @@ public class ProviderResponse {
     private String profileDetails;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private String nationalId;
+    private String licenseNumber;
+    private LocalDateTime licenseExpiryDate;
+    private Integer yearsOfExperience;
+    private String specialization;
+    private String companyName;
+    private Boolean isCertified;
+    private Double rating;
+    private Integer totalReviews;
 }

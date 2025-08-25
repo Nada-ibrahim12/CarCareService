@@ -3,6 +3,8 @@ package org.os.carcareservice.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ProviderRegistrationRequest {
 
@@ -18,10 +20,18 @@ public class ProviderRegistrationRequest {
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @NotBlank(message = "Approval status is mandatory")
     private String approvalStatus = "PENDING";
 
     private String profileDetails;
+
+    private String nationalId;
+    private String licenseNumber;
+    private LocalDateTime licenseExpiryDate;
+    private Integer yearsOfExperience;
+    private String specialization;
+    private String companyName;
+    private Double hourlyRate;
+    private Boolean isCertified = false;
 
 
 }

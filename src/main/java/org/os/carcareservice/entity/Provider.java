@@ -11,7 +11,34 @@ import java.util.List;
 public class Provider extends User {
 
     @Column(name = "approval_status", nullable = false, length = 50)
-    private String approvalStatus;
+    private String approvalStatus = "PENDING";
+
+    @Column(name = "national_id", unique = true, length = 50)
+    private String nationalId;
+
+    @Column(name = "license_number", unique = true, length = 100)
+    private String licenseNumber;
+
+    @Column(name = "license_expiry_date")
+    private LocalDateTime licenseExpiryDate;
+
+    @Column(name = "years_of_experience")
+    private Integer yearsOfExperience;
+
+    @Column(name = "specialization", length = 200)
+    private String specialization;
+
+    @Column(name = "company_name", length = 200)
+    private String companyName;
+
+    @Column(name = "is_certified")
+    private Boolean isCertified = false;
+
+    @Column(name = "rating")
+    private Double rating = 0.0;
+
+    @Column(name = "total_reviews")
+    private Integer totalReviews = 0;
 
     @Lob
     @Column(name = "profile_details", columnDefinition = "TEXT")
@@ -131,6 +158,78 @@ public class Provider extends User {
     public void removeAvailability(Availability availability) {
         this.availability.remove(availability);
         availability.setProvider(null);
+    }
+
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
+    public LocalDateTime getLicenseExpiryDate() {
+        return licenseExpiryDate;
+    }
+
+    public void setLicenseExpiryDate(LocalDateTime licenseExpiryDate) {
+        this.licenseExpiryDate = licenseExpiryDate;
+    }
+
+    public Integer getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(Integer yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Boolean getIsCertified() {
+        return isCertified;
+    }
+
+    public void setIsCertified(Boolean isCertified) {
+        this.isCertified = isCertified;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Integer getTotalReviews() {
+        return totalReviews;
+    }
+
+    public void setTotalReviews(Integer totalReviews) {
+        this.totalReviews = totalReviews;
     }
 
     // Utility methods for bidirectional relationships

@@ -37,6 +37,13 @@ public class ProviderServiceImpl implements ProviderService{
         provider.setApprovalStatus(request.getApprovalStatus());
         provider.setProfileDetails(request.getProfileDetails());
 
+        provider.setNationalId(request.getNationalId());
+        provider.setLicenseNumber(request.getLicenseNumber());
+        provider.setLicenseExpiryDate(request.getLicenseExpiryDate());
+        provider.setYearsOfExperience(request.getYearsOfExperience());
+        provider.setSpecialization(request.getSpecialization());
+        provider.setCompanyName(request.getCompanyName());
+        provider.setIsCertified(request.getIsCertified());
 
         Provider savedProvider = providerRepository.save(provider);
 
@@ -83,6 +90,16 @@ public class ProviderServiceImpl implements ProviderService{
         response.setProfileDetails(provider.getProfileDetails());
         response.setCreatedAt(provider.getCreatedAt());
         response.setUpdatedAt(provider.getUpdatedAt());
+
+        response.setNationalId(provider.getNationalId());
+        response.setLicenseNumber(provider.getLicenseNumber());
+        response.setLicenseExpiryDate(provider.getLicenseExpiryDate());
+        response.setYearsOfExperience(provider.getYearsOfExperience());
+        response.setSpecialization(provider.getSpecialization());
+        response.setCompanyName(provider.getCompanyName());
+        response.setIsCertified(provider.getIsCertified());
+        response.setRating(provider.getRating());
+        response.setTotalReviews(provider.getTotalReviews());
 
         return response;
     }
