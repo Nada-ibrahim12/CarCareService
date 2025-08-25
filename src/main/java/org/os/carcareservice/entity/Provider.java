@@ -6,18 +6,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Table(name = "providers")
 public class Provider extends User {
-
-    @Column(name = "approval_status", nullable = false, length = 50)
-    private String approvalStatus = "PENDING";
 
     @Column(name = "national_id", unique = true, length = 50)
     private String nationalId;
 
     @Column(name = "license_number", unique = true, length = 100)
     private String licenseNumber;
+
+    @Column(name = "is_verified")
+    private Boolean isVerified = false;
 
     @Column(name = "license_expiry_date")
     private LocalDateTime licenseExpiryDate;
@@ -44,6 +45,8 @@ public class Provider extends User {
     @Column(name = "profile_details", columnDefinition = "TEXT")
     private String profileDetails;
 
+
+
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Service> services = new ArrayList<>();
 
@@ -67,17 +70,16 @@ public class Provider extends User {
     // Constructors
     public Provider() {
         super();
+        this.setStatus(UserStatus.PENDING_VERIFICATION);
     }
 
     public Provider(String name, String email, String phone, String password,
-                    String approvalStatus, String profileDetails) {
+                    UserStatus status, String profileDetails) {
         super(name, email, phone, password);
-        this.approvalStatus = approvalStatus;
         this.profileDetails = profileDetails;
     }
 
-    public Provider(String approvalStatus, String profileDetails) {
-        this.approvalStatus = approvalStatus;
+    public Provider(UserStatus status, String profileDetails) {
         this.profileDetails = profileDetails;
     }
 
@@ -85,15 +87,6 @@ public class Provider extends User {
     @Override
     public Role getRole() {
         return Role.PROVIDER;
-    }
-
-    // Getters & Setters
-    public String getApprovalStatus() {
-        return approvalStatus;
-    }
-
-    public void setApprovalStatus(String approvalStatus) {
-        this.approvalStatus = approvalStatus;
     }
 
     public String getProfileDetails() {
@@ -232,36 +225,13 @@ public class Provider extends User {
         this.totalReviews = totalReviews;
     }
 
-    // Utility methods for bidirectional relationships
-//    public void addService(Service service) {
-//        services.add(service);
-//        service.setProvider(this);
-//    }
-//
-//    public void removeService(Service service) {
-//        services.remove(service);
-//        service.setProvider(null);
-//    }
-//
-//    public void addRequest(Request request) {
-//        requests.add(request);
-//        request.setProvider(this);
-//    }
-//
-//    public void removeRequest(Request request) {
-//        requests.remove(request);
-//        request.setProvider(null);
-//    }
-//
-//    public void addNotification(Notification notification) {
-//        notifications.add(notification);
-//        notification.setProvider(this);
-//    }
-//
-//    public void removeNotification(Notification notification) {
-//        notifications.remove(notification);
-//        notification.setProvider(null);
-//    }
+    public Boolean getIsVerified() {
+        return this.isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
 
     @Override
     public String toString() {
@@ -270,7 +240,6 @@ public class Provider extends User {
                 ", name='" + getName() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", phone='" + getPhone() + '\'' +
-                ", approvalStatus='" + approvalStatus + '\'' +
                 ", profileDetails='" + profileDetails + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -281,6 +250,9 @@ public class Provider extends User {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        if (this.getStatus() == null) {
+            this.setStatus(UserStatus.PENDING_VERIFICATION);
+        }
     }
 
     @PreUpdate

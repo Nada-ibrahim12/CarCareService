@@ -34,7 +34,6 @@ public class ProviderServiceImpl implements ProviderService{
         provider.setEmail(request.getEmail());
         provider.setPhone(request.getPhone());
         provider.setPassword(passwordEncoder.encode(request.getPassword()));
-        provider.setApprovalStatus(request.getApprovalStatus());
         provider.setProfileDetails(request.getProfileDetails());
 
         provider.setNationalId(request.getNationalId());
@@ -80,13 +79,13 @@ public class ProviderServiceImpl implements ProviderService{
         return providerRepository.findAll().stream().map(this::mapToProviderResponse).collect(Collectors.toList());
     }
 
-    private ProviderResponse mapToProviderResponse(Provider provider) {
+    public ProviderResponse mapToProviderResponse(Provider provider) {
         ProviderResponse response = new ProviderResponse();
         response.setId(provider.getId());
         response.setName(provider.getName());
         response.setEmail(provider.getEmail());
         response.setPhone(provider.getPhone());
-        response.setApprovalStatus(provider.getApprovalStatus());
+        response.setStatus(provider.getStatus());
         response.setProfileDetails(provider.getProfileDetails());
         response.setCreatedAt(provider.getCreatedAt());
         response.setUpdatedAt(provider.getUpdatedAt());

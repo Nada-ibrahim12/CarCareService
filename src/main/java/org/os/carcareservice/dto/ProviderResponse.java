@@ -1,6 +1,7 @@
 package org.os.carcareservice.dto;
 
 import lombok.Data;
+import org.os.carcareservice.entity.UserStatus;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ public class ProviderResponse {
     private String name;
     private String email;
     private String phone;
-    private String approvalStatus;
+    private UserStatus status;
     private String profileDetails;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

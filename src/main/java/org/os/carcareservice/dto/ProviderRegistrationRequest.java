@@ -20,8 +20,6 @@ public class ProviderRegistrationRequest {
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    private String approvalStatus = "PENDING";
-
     private String profileDetails;
 
     private String nationalId;

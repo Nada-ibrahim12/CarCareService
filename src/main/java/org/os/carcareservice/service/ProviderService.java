@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.os.carcareservice.dto.ProviderRegistrationRequest;
 import org.os.carcareservice.dto.ProviderResponse;
 import org.os.carcareservice.dto.ProviderUpdateRequest;
+import org.os.carcareservice.entity.Provider;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ProviderService {
     ProviderResponse updateProvider(Long ProviderId, @Valid ProviderUpdateRequest request);
 
     List<ProviderResponse> getAllProviders();
+
+    ProviderResponse mapToProviderResponse(Provider provider);
 }
