@@ -1,63 +1,107 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "customer")
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
+@Table(name = "customers")
+public class Customer extends User {
 
-    @Column(name = "name", nullable = false, length = 100)
-    private String customerName;
+    // One-to-Many relationship with CustomerCar
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CustomerCar> customerCars = new ArrayList<>();
 
-    @Column(name = "email", nullable = false, length = 100, unique = true)
-    private String customerEmail;
+    // One-to-Many relationship with Enquiry
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Enquiry> enquiries = new ArrayList<>();
 
-    @Column(name = "phone", length = 20)
-    private String customerPhone;
+    // One-to-Many relationship with Request
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Request> requests = new ArrayList<>();
 
+    // One-to-Many relationship with Review
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
+
+    // One-to-Many relationship with Notification
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notification> notifications = new ArrayList<>();
+
+    // Constructors
     public Customer() {
+        super();
     }
 
-    public Customer(String customerName, String customerEmail, String customerPhone) {
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
-        this.customerPhone = customerPhone;
+    public Customer(String name, String email, String phone, String password) {
+        super(name, email, phone, password);
     }
 
-    public Integer getCustomerId() {
-        return customerId;
+    @Override
+    public Role getRole() {
+        return Role.CUSTOMER;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    // Getters and Setters
+    public List<CustomerCar> getCustomerCars() {
+        return customerCars;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public void setCustomerCars(List<CustomerCar> customerCars) {
+        this.customerCars = customerCars;
     }
 
-    public String getCustomerPhone() {
-        return customerPhone;
+    public List<Enquiry> getEnquiries() {
+        return enquiries;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setEnquiries(List<Enquiry> enquiries) {
+        this.enquiries = enquiries;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public List<Request> getRequests() {
+        return requests;
     }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
     }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", phone='" + getPhone() + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        return getId() != null && getId().equals(((Customer) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

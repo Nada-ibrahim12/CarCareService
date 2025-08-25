@@ -12,19 +12,19 @@ public class CustomerCar {
     @Column(name = "car_id")
     private Integer carId;
 
-    @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
-
     @Column(name = "license_number", nullable = false, length = 50, unique = true)
     private String licenseNumber;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    // Many cars belong to one car type
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_type_id", nullable = false)
-     private CarType carType;
+    private CarType carType;
 
     // Getters & Setters
     public Integer getCarId() {
@@ -33,14 +33,6 @@ public class CustomerCar {
 
     public void setCarId(Integer carId) {
         this.carId = carId;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 
     public String getLicenseNumber() {
@@ -59,6 +51,14 @@ public class CustomerCar {
         this.createdAt = createdAt;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public CarType getCarType() {
         return carType;
     }
@@ -67,3 +67,4 @@ public class CustomerCar {
         this.carType = carType;
     }
 }
+
