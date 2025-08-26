@@ -2,13 +2,17 @@ package org.os.carcareservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+public abstract class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +55,6 @@ public abstract class User {
         this.password = password;
     }
 
-    // Abstract method to get user role
     public abstract Role getRole();
 
     // Getters and Setters
@@ -87,6 +90,7 @@ public abstract class User {
         this.phone = phone;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -102,4 +106,42 @@ public abstract class User {
     public void setStatus(UserStatus status) {
         this.status = status;
     }
+
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(getRole().getAuthority()));
+    }
+
+    @Override
+    @Transient
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return status != UserStatus.SUSPENDED;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return status == UserStatus.ACTIVE;
+    }
+
 }

@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 public class Customer extends User {
+    @Column(name = "location" , nullable = false)
+    private String location;
 
     // One-to-Many relationship with CustomerCar
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -40,6 +42,14 @@ public class Customer extends User {
     @Override
     public Role getRole() {
         return Role.CUSTOMER;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     // Getters and Setters
