@@ -1,47 +1,60 @@
 package org.os.carcareservice.entity;
-
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+
+    @NotBlank(message = "Name is required")
     @Size(min = 3, max = 100)
     @Column(nullable = false)
-
     private String name;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please provide a valid email")
     @Column(unique = true, nullable = false)
-
     private String email;
 
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Please provide a valid phone number")
     @Column
     private String phone;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
     @Size(min = 8)
     @Column(nullable = false)
-
+    @JsonIgnore
     private String password;
 
-    public enum UserStatus {
-        ACTIVE, INACTIVE, SUSPENDED
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status = UserStatus.ACTIVE;
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
+
+
+    protected User() {}
+
+    public User(String name, String email, String phone, String password) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
     }
 
-    @Enumerated(EnumType.STRING)
+    // Abstract method to get user role
+    public abstract Role getRole();
 
-    @Column(nullable = false)
-
-    private UserStatus status;
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -58,20 +71,20 @@ public class User {
         this.name = name;
     }
 
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -82,11 +95,11 @@ public class User {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 }

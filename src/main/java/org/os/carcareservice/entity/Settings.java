@@ -1,6 +1,7 @@
 package org.os.carcareservice.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,10 +9,10 @@ import java.time.LocalDateTime;
 public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "settings_id", nullable = false)
+    @Column(name = "settings_id")
     private Integer settingsId;
 
-    @Column(name = "platform_name", nullable = false, length = 100)
+    @Column(name = "platform_name", nullable = false)
     private String platformName;
 
     @Column(name = "logo_url")
@@ -41,24 +42,31 @@ public class Settings {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Settings() {}
-
-    public Settings(String platformName, String logoUrl, String aboutImage, String aboutDescription,
-                    String termsAndCondition, String facebookUrl, String whatsappNumber,
-                    String phoneNumber, String secondPhoneNumber, LocalDateTime updatedAt) {
-        this.platformName = platformName;
-        this.logoUrl = logoUrl;
-        this.aboutImage = aboutImage;
-        this.aboutDescription = aboutDescription;
-        this.termsAndCondition = termsAndCondition;
-        this.facebookUrl = facebookUrl;
-        this.whatsappNumber = whatsappNumber;
-        this.phoneNumber = phoneNumber;
-        this.secondPhoneNumber = secondPhoneNumber;
-        this.updatedAt = updatedAt;
+    public Settings() {
     }
 
-    // Getters and Setters
+    public Settings(LocalDateTime updatedAt,
+                    String secondPhoneNumber,
+                    String phoneNumber,
+                    String whatsappNumber,
+                    String facebookUrl,
+                    String termsAndCondition,
+                    String aboutDescription,
+                    String aboutImage,
+                    String logoUrl,
+                    String platformName) {
+        this.updatedAt = updatedAt;
+        this.secondPhoneNumber = secondPhoneNumber;
+        this.phoneNumber = phoneNumber;
+        this.whatsappNumber = whatsappNumber;
+        this.facebookUrl = facebookUrl;
+        this.termsAndCondition = termsAndCondition;
+        this.aboutDescription = aboutDescription;
+        this.aboutImage = aboutImage;
+        this.logoUrl = logoUrl;
+        this.platformName = platformName;
+    }
+
     public Integer getSettingsId() {
         return settingsId;
     }
