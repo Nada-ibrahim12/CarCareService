@@ -1,5 +1,6 @@
 package org.os.carcareservice.controller;
 
+import org.os.carcareservice.dto.BroadcastRequestDTO;
 import org.os.carcareservice.dto.NotificationDTO;
 import org.os.carcareservice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,32 @@ public class NotificationController {
         NotificationDTO updatedNotification = notificationService.markNotificationAsRead(userId, notificationId);
         return ResponseEntity.ok(updatedNotification);
     }
+
     //Done
     @DeleteMapping("/{notificationId}")
     public ResponseEntity<Void> deleteNotification(@PathVariable Integer notificationId) {
         notificationService.deleteNotification(notificationId);
         return ResponseEntity.noContent().build();
     }
+
+    //Done
+    /* How to use the broadcast endpoint
+    * Content-Type: application/json
+    * {
+         "message": "System maintenance will occur at 10 PM.",
+         "type": "SYSTEM_ALERT"
+      }
+      */
+    @PostMapping("/broadcast")
+    public ResponseEntity<List<NotificationDTO>> broadcastNotification(
+            @RequestBody BroadcastRequestDTO request) {
+
+        List<NotificationDTO> notifications =
+                notificationService.broadcastNotification(request.getMessage(), request.getType());
+
+        return ResponseEntity.ok(notifications);
+    }
+
 
 
 

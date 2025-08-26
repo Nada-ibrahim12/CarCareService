@@ -3,14 +3,16 @@ package org.os.carcareservice.service;
 import jakarta.transaction.Transactional;
 import org.os.carcareservice.dto.NotificationDTO;
 import org.os.carcareservice.entity.Notification;
+import org.os.carcareservice.entity.User;
 import org.os.carcareservice.exception.NotFoundException;
 import org.os.carcareservice.repository.NotificationRepository;
 import org.os.carcareservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +69,33 @@ public class NotificationService {
             throw new NotFoundException("Notification not found with id: " + notificationId);
         }
         notificationRepository.deleteById(notificationId);
+    }
+
+
+
+    @Transactional
+    public List<NotificationDTO> broadcastNotification(String message, String type) {
+        List<User> users = userRepository.findAll();
+
+        if (users.isEmpty()) {
+            throw new NotFoundException("No users found to send broadcast notification.");
+        }
+
+        List<Notification> notifications = users.stream()
+                .map(user -> new Notification(
+                        user,
+                        message,
+                        type,
+                        "Unread",
+                        LocalDateTime.now()
+                ))
+                .toList();
+
+        List<Notification> savedNotifications = notificationRepository.saveAll(notifications);
+
+        return savedNotifications.stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     private NotificationDTO convertToDTO(Notification notification) {
