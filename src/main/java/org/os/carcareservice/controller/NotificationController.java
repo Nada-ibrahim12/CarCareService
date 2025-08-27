@@ -68,7 +68,85 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
     }
 
+    //Done
+    /* how to use the notify customer endpoint
+            POST /api/notifications/customer/{id}
+        {
+            "message": "Your service request has been approved!",
+            "type": "REQUEST_UPDATE"
+        }
 
+     */
+    @PostMapping("/customer/{id}")
+    public ResponseEntity<NotificationDTO> notifyCustomer(
+            @PathVariable Long id,
+            @RequestBody BroadcastRequestDTO request) {
+        NotificationDTO notification =
+                notificationService.notifyCustomer(id, request.getMessage(), request.getType());
 
+        return ResponseEntity.ok(notification);
+    }
+
+    //Done
+    /* how to use the notify provider endpoint
+            POST /api/notifications/provider/{id}
+        {
+            "message": "Your service request has been approved!",
+            "type": "REQUEST_UPDATE"
+        }
+
+     */
+    @PostMapping("/provider/{id}")
+    public ResponseEntity<NotificationDTO> notifyProvider(
+            @PathVariable Long id,
+            @RequestBody BroadcastRequestDTO request) {
+
+        NotificationDTO notification =
+                notificationService.notifyProvider(id, request.getMessage(), request.getType());
+
+        return ResponseEntity.ok(notification);
+    }
+
+    //Done
+    /* how to use the notify customers endpoint
+        POST /api/notifications/customers
+    {
+        "message": "Your service request has been approved!",
+        "type": "Customers-Message"
+    }
+ */
+    @PostMapping("/customers")
+    public ResponseEntity<String> notifyCustomers(@RequestBody NotificationDTO dto) {
+        notificationService.notifyAllCustomers(dto);
+        return ResponseEntity.ok("Notification sent to all customers");
+    }
+
+    //Done
+    /* how to use the notify providers endpoint
+        POST /api/notifications/providers
+    {
+        "message": "Your service request has been approved!",
+        "type": "Providers-Message"
+    }
+ */
+    @PostMapping("/providers")
+    public ResponseEntity<String> notifyProviders(@RequestBody NotificationDTO dto) {
+        notificationService.notifyAllProviders(dto);
+        return ResponseEntity.ok("Notification sent to all providers");
+    }
+
+    //Done
+    /* how to use the notify Admins endpoint
+        POST /api/notifications/admins
+    {
+        "message": "Your service request has been approved!",
+        "type": "Admins-Message"
+    }
+ */
+    @PostMapping("/admins")
+    public ResponseEntity<String> notifyAdmins(@RequestBody NotificationDTO dto) {
+        notificationService.notifyAllAdmins(dto);
+        return ResponseEntity.ok("Notification sent to all Admins");
+    }
 
 }

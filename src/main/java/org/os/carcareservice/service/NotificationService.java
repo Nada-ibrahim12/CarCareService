@@ -2,8 +2,7 @@ package org.os.carcareservice.service;
 
 import jakarta.transaction.Transactional;
 import org.os.carcareservice.dto.NotificationDTO;
-import org.os.carcareservice.entity.Notification;
-import org.os.carcareservice.entity.User;
+import org.os.carcareservice.entity.*;
 import org.os.carcareservice.exception.NotFoundException;
 import org.os.carcareservice.repository.NotificationRepository;
 import org.os.carcareservice.repository.UserRepository;
@@ -110,4 +109,75 @@ public class NotificationService {
         }
         return dto;
     }
+
+
+    @Transactional
+    public NotificationDTO notifyCustomer(Long customerId, String message, String type) {
+        User customer = userRepository.findById(customerId)
+                .orElseThrow(() -> new NotFoundException("Customer not found with id: " + customerId));
+
+        if (!(customer instanceof Customer)) {
+            throw new NotFoundException("User with id " + customerId + " is not a customer.");
+        }
+
+        Notification notification = new Notification(
+                customer,
+                message,
+                type,
+                "Unread",
+                LocalDateTime.now()
+        );
+
+        Notification saved = notificationRepository.save(notification);
+        return convertToDTO(saved);
+    }
+
+
+    @Transactional
+    public NotificationDTO notifyProvider(Long providerId, String message, String type) {
+        User provider = userRepository.findById(providerId)
+                .orElseThrow(() -> new NotFoundException("Provider not found with id: " + providerId));
+
+        if (!(provider instanceof Provider)) {
+            throw new NotFoundException("User with id " + providerId + " is not a provider.");
+        }
+
+        Notification notification = new Notification(
+                provider,
+                message,
+                type,
+                "Unread",
+                LocalDateTime.now()
+        );
+
+        Notification saved = notificationRepository.save(notification);
+        return convertToDTO(saved);
+    }
+
+    public void notifyAllCustomers(NotificationDTO dto) {
+        List<User> customers = userRepository.findByRole(Role.CUSTOMER);
+        selectUserType(dto, customers);
+    }
+
+    public void notifyAllProviders(NotificationDTO dto) {
+        List<User> providers = userRepository.findByRole(Role.PROVIDER);
+        selectUserType(dto, providers);
+    }
+    public void notifyAllAdmins(NotificationDTO dto) {
+        List<User> admins = userRepository.findByRole(Role.ADMIN);
+        selectUserType(dto, admins);
+    }
+
+    private void selectUserType(NotificationDTO dto, List<User> users) {
+        for (User user : users) {
+            Notification notification = new Notification();
+            notification.setMessage(dto.getMessage());
+            notification.setType(dto.getType());
+            notification.setStatus("UNREAD");
+            notification.setCreatedAt(LocalDateTime.now());
+            notification.setUser(user);
+            notificationRepository.save(notification);
+        }
+    }
+
 }
