@@ -1,9 +1,24 @@
 package org.os.carcareservice.entity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +36,7 @@ public abstract class User {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Please provide a valid email")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Please provide a valid phone number")
@@ -41,8 +56,8 @@ public abstract class User {
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
 
-
-    protected User() {}
+    protected User() {
+    }
 
     public User(String name, String email, String phone, String password) {
         this.name = name;
