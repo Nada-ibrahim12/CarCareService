@@ -14,6 +14,8 @@ public class CustomerCar {
 
     @Column(name = "license_number", nullable = false, length = 50, unique = true)
     private String licenseNumber;
+   @Column(name = "plate", nullable = false, length = 50, unique = true)
+    private String plate;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -66,7 +68,5 @@ public class CustomerCar {
     public void setCarType(CarType carType) {
         this.carType = carType;
     }
-
-  
 }
 

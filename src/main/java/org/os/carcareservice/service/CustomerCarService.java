@@ -25,12 +25,12 @@ public class CustomerCarService {
     }
 //add car by token
 
-    public CustomerCar addCar(String customerToken, CustomerCar car) {
-        Customer customer = customerRepository.findByToken(customerToken)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-        car.setCustomer(customer);
-        return carRepository.save(car);
-    }
+    // public CustomerCar addCar(String customerToken, CustomerCar car) {
+    //     Customer customer = customerRepository.findByToken(customerToken)
+    //             .orElseThrow(() -> new RuntimeException("Customer not found"));
+    //     car.setCustomer(customer);
+    //     return carRepository.save(car);
+    // }
 // add car by id just for test
 
     public CustomerCar addCarByCustomerId(Integer customerId, CustomerCar car) {
@@ -40,9 +40,9 @@ public class CustomerCarService {
         return carRepository.save(car);
     }
 
-    public List<CustomerCar> getCarsByCustomerToken(String token) {
-        return carRepository.findByCustomer_Token(token);
-    }
+    // public List<CustomerCar> getCarsByCustomerToken(String token) {
+    //     return carRepository.findByCustomer_Token(token);
+    // }
 
     public List<CustomerCar> getCarsByCustomerId(Integer id) {
         return carRepository.findByCustomer_Id(id);
@@ -53,17 +53,17 @@ public class CustomerCarService {
                 .orElseThrow(() -> new RuntimeException("Car not found"));
     }
 
-    public CustomerCar getCarByToken(String token) {
-        return carRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
-    }
-
-    public CustomerCar updateCar(String token, CustomerCar updatedCar) {
+    // public CustomerCar getCarByToken(String token) {
+    //     return carRepository.findByToken(token)
+    //             .orElseThrow(() -> new RuntimeException("Car not found"));
+    // }
+//change to id temporarily
+    public CustomerCar updateCar(int id, CustomerCar updatedCar) {
         // 1. Get the existing car by token
-        CustomerCar car = getCarByToken(token);
+        CustomerCar car = getCarById(id);
 
         if (car == null) {
-            throw new RuntimeException("Car not found with token: " + token);
+            throw new RuntimeException("Car not found with token: " + id);
         }
 
         // 2. Update fields
@@ -75,8 +75,6 @@ public class CustomerCarService {
             car.setCarType(updatedCar.getCarType());
         }
 
-        // (CreatedAt و Customer غالباً مايتغيروش، لكن لو عايزة ممكن تحدثيهم برضو)
-        // 3. Save updated car
         return carRepository.save(car);
     }
 
@@ -84,10 +82,10 @@ public class CustomerCarService {
         carRepository.deleteById(id);
     }
 
-    public void deleteCarByToken(String token) {
-        CustomerCar car = getCarByToken(token);
-        carRepository.delete(car);
-    }
+    // public void deleteCarByToken(String token) {
+    //     CustomerCar car = getCarByToken(token);
+    //     carRepository.delete(car);
+    // }
 
     public CustomerCar searchByPlate(String plate) {
         return carRepository.findByPlate(plate)

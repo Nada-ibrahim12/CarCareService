@@ -19,10 +19,10 @@ public class CustomerCarController {
     }
 
     // POST /customers/{token}/cars
-    @PostMapping("/customers/{token}/cars")
-    public CustomerCar addCar(@PathVariable String token, @RequestBody CustomerCar car) {
-        return carService.addCar(token, car);
-    }
+    // @PostMapping("/customers/{token}/cars")
+    // public CustomerCar addCar(@PathVariable String token, @RequestBody CustomerCar car) {
+    //     return carService.addCar(token, car);
+    // }
 
     @PostMapping("/customers/{id}/cars")
     public CustomerCar addCarByCustomerId(@PathVariable Integer id, @RequestBody CustomerCar car) {
@@ -30,10 +30,10 @@ public class CustomerCarController {
     }
 
     // GET /customers/{token}/cars
-    @GetMapping("/customers/{token}/cars")
-    public List<CustomerCar> getCarsByCustomerToken(@PathVariable String token) {
-        return carService.getCarsByCustomerToken(token);
-    }
+    // @GetMapping("/customers/{token}/cars")
+    // public List<CustomerCar> getCarsByCustomerToken(@PathVariable String token) {
+    //     return carService.getCarsByCustomerToken(token);
+    // }
 
     // GET /customers/{id}/cars
     @GetMapping("/customers/{id}/cars")
@@ -48,16 +48,16 @@ public class CustomerCarController {
     }
 
     // GET /cars/{token}
-    @GetMapping("/token/{token}")
-    public CustomerCar getCarByToken(@PathVariable String token) {
-        return carService.getCarByToken(token);
-    }
+    // @GetMapping("/token/{token}")
+    // public CustomerCar getCarByToken(@PathVariable String token) {
+    //     return carService.getCarByToken(token);
+    // }
 
-    // PUT /cars/{token}
-    @PutMapping("/{token}")
-    public CustomerCar updateCar(@PathVariable String token, @RequestBody CustomerCar updatedCar) {
-        return carService.updateCar(token, updatedCar);
-    }
+    // // PUT /cars/{token}
+    // @PutMapping("/{token}")
+    // public CustomerCar updateCar(@PathVariable String token, @RequestBody CustomerCar updatedCar) {
+    //     return carService.updateCar(token, updatedCar);
+    // }
 
     // DELETE /cars/{id}
     @DeleteMapping("/{id}")
@@ -66,10 +66,10 @@ public class CustomerCarController {
     }
 
     // DELETE /cars/{token}
-    @DeleteMapping("/token/{token}")
-    public void deleteCarByToken(@PathVariable String token) {
-        carService.deleteCarByToken(token);
-    }
+    // @DeleteMapping("/token/{token}")
+    // public void deleteCarByToken(@PathVariable String token) {
+    //     carService.deleteCarByToken(token);
+    // }
 
     // GET /cars/search?plate={plate}
     @GetMapping("/search")
