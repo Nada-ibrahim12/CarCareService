@@ -18,4 +18,9 @@ public class AvailabilityRequest {
     private LocalTime endTime;
 
     private Boolean isAvailable = true;
+
+    public DayOfWeek getDayOfWeek() { return dayOfWeek; }
+    public LocalTime getStartTime() { return startTime; }
+    public LocalTime getEndTime() { return endTime; }
+    public Boolean getIsAvailable() { return isAvailable; }
 }

@@ -2,10 +2,10 @@ package org.os.carcareservice.service;
 
 import org.os.carcareservice.entity.Service;
 import org.os.carcareservice.repository.ServiceRepository;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 public class ServiceService {
     private final ServiceRepository serviceRepository;
 
