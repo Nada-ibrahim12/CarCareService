@@ -22,7 +22,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     // REGISTER ADMIN
-    public AuthResponse registerAdmin(AdminRegisterRequest request) {
+    public AuthResponse registerAdmin(AdminDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
         }
@@ -50,7 +50,7 @@ public class AuthService {
     }
 
     // REGISTER CUSTOMER
-    public AuthResponse registerCustomer(CustomerRegisterRequest request) {
+    public AuthResponse registerCustomer(CustomerDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
         }
@@ -80,7 +80,7 @@ public class AuthService {
     }
 
     // REGISTER PROVIDER
-    public AuthResponse registerProvider(ProviderRegisterRequest request) {
+    public AuthResponse registerProvider(ProviderDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
         }

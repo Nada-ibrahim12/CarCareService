@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseRegisterRequest {
+public abstract class BaseUserDTO {
     private String name;
     private String email;
     private String phone;

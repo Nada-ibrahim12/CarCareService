@@ -9,7 +9,12 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CustomerRegisterRequest extends BaseRegisterRequest {
+public class CustomerDTO extends BaseUserDTO {
     private String location;
+
+    public CustomerDTO(String name, String email, String phone , String password, String location) {
+        super(name, email, phone , password);
+        this.location = location;
+    }
 }
 

@@ -15,19 +15,19 @@ public class AuthController {
 
     // ? register ADMIN
     @PostMapping("/register/admin")
-    public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AdminRegisterRequest request) {
+    public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AdminDTO request) {
         return ResponseEntity.ok(authService.registerAdmin(request));
     }
 
     // ? register CUSTOMER
     @PostMapping("/register/customer")
-    public ResponseEntity<AuthResponse> registerCustomer(@RequestBody CustomerRegisterRequest request) {
+    public ResponseEntity<AuthResponse> registerCustomer(@RequestBody CustomerDTO request) {
         return ResponseEntity.ok(authService.registerCustomer(request));
     }
 
     // ? register PROVIDER
     @PostMapping("/register/provider")
-    public ResponseEntity<AuthResponse> registerProvider(@RequestBody ProviderRegisterRequest request) {
+    public ResponseEntity<AuthResponse> registerProvider(@RequestBody ProviderDTO request) {
         return ResponseEntity.ok(authService.registerProvider(request));
     }
 

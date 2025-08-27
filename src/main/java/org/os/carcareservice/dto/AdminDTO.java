@@ -3,13 +3,15 @@ package org.os.carcareservice.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
 //@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class AdminRegisterRequest extends BaseRegisterRequest {
+public class AdminDTO extends BaseUserDTO {
     // ? No extra fields for now
+    public AdminDTO(String name, String email, String phone, String password) {
+        super(name, email, phone, password);
+    }
 }
 
