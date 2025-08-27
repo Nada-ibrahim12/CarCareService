@@ -66,5 +66,7 @@ public class CustomerCar {
     public void setCarType(CarType carType) {
         this.carType = carType;
     }
+
+  
 }
 

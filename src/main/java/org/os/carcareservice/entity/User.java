@@ -1,4 +1,5 @@
 package org.os.carcareservice.entity;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,8 +20,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-
-
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -37,7 +36,7 @@ public abstract class User {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Please provide a valid email")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Please provide a valid phone number")
@@ -57,8 +56,8 @@ public abstract class User {
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
 
-
-    protected User() {}
+    protected User() {
+    }
 
     public User(String name, String email, String phone, String password) {
         this.name = name;
