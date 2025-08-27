@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
     // Optional<Customer> findByToken(String token);
-    Optional<Customer> findById(Integer id);
+    Optional<Customer> findById(Long id);
 }

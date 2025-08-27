@@ -33,7 +33,7 @@ public class CustomerCarService {
     // }
 // add car by id just for test
 
-    public CustomerCar addCarByCustomerId(Integer customerId, CustomerCar car) {
+    public CustomerCar addCarByCustomerId(Long customerId, CustomerCar car) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         car.setCustomer(customer);
@@ -44,11 +44,11 @@ public class CustomerCarService {
     //     return carRepository.findByCustomer_Token(token);
     // }
 
-    public List<CustomerCar> getCarsByCustomerId(Integer id) {
+    public List<CustomerCar> getCarsByCustomerId(int id) {
         return carRepository.findByCustomer_Id(id);
     }
 
-    public CustomerCar getCarById(Integer id) {
+    public CustomerCar getCarById(int id) {
         return carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
     }

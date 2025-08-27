@@ -7,8 +7,6 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 public class Customer extends User {
-
-
     // One-to-Many relationship with CustomerCar
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CustomerCar> customerCars = new ArrayList<>();

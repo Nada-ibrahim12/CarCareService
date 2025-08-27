@@ -68,5 +68,12 @@ public class CustomerCar {
     public void setCarType(CarType carType) {
         this.carType = carType;
     }
+
+    public String getPlate() {
+        return plate;
+    }
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
 }
 

@@ -25,7 +25,7 @@ public class CustomerCarController {
     // }
 
     @PostMapping("/customers/{id}/cars")
-    public CustomerCar addCarByCustomerId(@PathVariable Integer id, @RequestBody CustomerCar car) {
+    public CustomerCar addCarByCustomerId(@PathVariable Long id, @RequestBody CustomerCar car) {
         return carService.addCarByCustomerId(id, car);
     }
 

@@ -40,8 +40,9 @@ public class Request {
     @Column(name = "estimated_cost", nullable = false, precision = 10, scale = 2)
     private BigDecimal estimatedCost;
 
-    @Column(name = "status", nullable = false, length = 100)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private RequestStatus status = RequestStatus.PENDING;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -114,14 +115,6 @@ public class Request {
         this.estimatedCost = estimatedCost;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -152,5 +145,13 @@ public class Request {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public RequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RequestStatus status) {
+        this.status = status;
     }
 }
