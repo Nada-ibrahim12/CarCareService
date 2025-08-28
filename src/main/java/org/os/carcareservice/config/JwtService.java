@@ -80,6 +80,10 @@ public class JwtService {
         return extractClaim(jwt, Claims::getSubject);
     }
 
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(jwt);
         return claimsResolver.apply(claims);
