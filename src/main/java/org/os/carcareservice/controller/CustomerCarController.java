@@ -25,7 +25,7 @@ public class CustomerCarController {
     // }
 
     @PostMapping("/customers/{id}/cars")
-    public CustomerCar addCarByCustomerId(@PathVariable Long id, @RequestBody CustomerCar car) {
+    public CustomerCarDTO addCarByCustomerId(@PathVariable Long id, @RequestBody CustomerCarDTO car) {
         return carService.addCarByCustomerId(id, car);
     }
 
@@ -37,13 +37,13 @@ public class CustomerCarController {
 
     // GET /customers/{id}/cars
     @GetMapping("/customers/{id}/cars")
-    public List<CustomerCar> getCarsByCustomerId(@PathVariable Integer id) {
+    public List<CustomerCarDTO> getCarsByCustomerId(@PathVariable Integer id) {
         return carService.getCarsByCustomerId(id);
     }
 
     // GET /cars/{id}
     @GetMapping("/{id}")
-    public CustomerCar getCarById(@PathVariable Integer id) {
+    public CustomerCarDTO getCarById(@PathVariable Integer id) {
         return carService.getCarById(id);
     }
 
@@ -73,7 +73,7 @@ public class CustomerCarController {
 
     // GET /cars/search?plate={plate}
     @GetMapping("/search")
-    public CustomerCar searchCarByPlate(@RequestParam String plate) {
+    public CustomerCarDTO searchCarByPlate(@RequestParam String plate) {
         return carService.searchByPlate(plate);
     }
 

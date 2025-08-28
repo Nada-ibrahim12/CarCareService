@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.os.carcareservice.dto.CustomerCarDTO;
 import org.os.carcareservice.entity.CarType;
 import org.os.carcareservice.entity.Customer;
@@ -18,6 +20,8 @@ public class CustomerCarService {
     private final CustomerRepository customerRepository;
     private final CustomerCarRepository carRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
     public CustomerCarService(CustomerRepository customerRepository,
             CustomerCarRepository customerCarRepository) {
         this.customerRepository = customerRepository;
@@ -33,24 +37,39 @@ public class CustomerCarService {
     // }
 // add car by id just for test
 
-    public CustomerCar addCarByCustomerId(Long customerId, CustomerCar car) {
+    public CustomerCarDTO addCarByCustomerId(Long customerId, CustomerCarDTO dto) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        CarType carType = entityManager.getReference(CarType.class, dto.getCarTypeId());
+
+        CustomerCar car = new CustomerCar();
+        car.setLicenseNumber(dto.getLicenseNumber());
+        car.setPlate(dto.getPlate());
+        car.setCreatedAt(LocalDateTime.now());
         car.setCustomer(customer);
-        return carRepository.save(car);
+        car.setCarType(carType);
+        car.setCustomer(customer);
+
+        carRepository.save(car);
+        return toDTO(car);
     }
 
     // public List<CustomerCar> getCarsByCustomerToken(String token) {
     //     return carRepository.findByCustomer_Token(token);
     // }
 
-    public List<CustomerCar> getCarsByCustomerId(int id) {
-        return carRepository.findByCustomer_Id(id);
+    public List<CustomerCarDTO> getCarsByCustomerId(int id) {
+        return carRepository.findByCustomer_Id(id)
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    public CustomerCar getCarById(int id) {
-        return carRepository.findById(id)
+    public CustomerCarDTO getCarById(int id) {
+        CustomerCar car = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
+        return toDTO(car);
     }
 
     // public CustomerCar getCarByToken(String token) {
@@ -58,24 +77,23 @@ public class CustomerCarService {
     //             .orElseThrow(() -> new RuntimeException("Car not found"));
     // }
 //change to id temporarily
-    public CustomerCar updateCar(int id, CustomerCar updatedCar) {
-        // 1. Get the existing car by token
-        CustomerCar car = getCarById(id);
-
-        if (car == null) {
-            throw new RuntimeException("Car not found with token: " + id);
-        }
+    public CustomerCarDTO updateCar(int id, CustomerCar updatedCar) {
+        // 1. Get the existing entity
+        CustomerCar car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car not found with id: " + id));
 
         // 2. Update fields
         if (updatedCar.getLicenseNumber() != null) {
             car.setLicenseNumber(updatedCar.getLicenseNumber());
         }
-
+        if (updatedCar.getPlate() != null) {
+            car.setPlate(updatedCar.getPlate());
+        }
         if (updatedCar.getCarType() != null) {
             car.setCarType(updatedCar.getCarType());
         }
 
-        return carRepository.save(car);
+        return toDTO(carRepository.save(car));
     }
 
     public void deleteCarById(Integer id) {
@@ -87,8 +105,21 @@ public class CustomerCarService {
     //     carRepository.delete(car);
     // }
 
-    public CustomerCar searchByPlate(String plate) {
-        return carRepository.findByPlate(plate)
+    public CustomerCarDTO searchByPlate(String plate) {
+        CustomerCar car = carRepository.findByPlate(plate)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
+        return toDTO(car);
     }
+
+    private CustomerCarDTO toDTO(CustomerCar car) {
+        return new CustomerCarDTO(
+                car.getCustomer().getId(),
+                car.getCarId(),
+                car.getLicenseNumber(),
+                car.getPlate(),
+                car.getCarType() != null ? car.getCarType().getCarTypeId() : null,
+                car.getCreatedAt()
+        );
+    }
+
 }
