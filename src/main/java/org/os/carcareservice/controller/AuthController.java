@@ -23,7 +23,7 @@ public class AuthController {
 // ?         "name": "ADMIN",
 // ?         "email": "ADMIN@example.com",
 // ?         "phone": "01155667788",
-// ?         "password": "123456",
+// ?         "password": "123456"
 // ?   }
     @PostMapping("/register/admin")
     public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AdminDTO request) {
@@ -40,7 +40,7 @@ public class AuthController {
 // ?         "email": "customer@example.com",
 // ?         "phone": "01155667788",
 // ?         "password": "123456",
-// ?         "location": "Haram, Giza",
+// ?         "location": "Haram, Giza"
 // ?   }
     @PostMapping("/register/customer")
     public ResponseEntity<AuthResponse> registerCustomer(@RequestBody CustomerDTO request) {
