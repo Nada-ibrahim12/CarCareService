@@ -1,11 +1,14 @@
 package org.os.carcareservice.mappers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.os.carcareservice.dto.AdminDTO;
 import org.os.carcareservice.dto.BaseUserDTO;
 import org.os.carcareservice.dto.CustomerDTO;
 import org.os.carcareservice.dto.ProviderDTO;
 import org.os.carcareservice.entity.*;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class UserMapper {
@@ -29,8 +32,54 @@ public class UserMapper {
                 Admin a = (Admin) user;
                 yield new AdminDTO(a.getName(), a.getEmail(), a.getPhone(), null);
             }
-            default -> throw new RuntimeException("Unknown user type");
         };
     }
+
+
+    public void updateEntityFromJson(JsonNode json, User user) {
+        if (json.has("name")) {
+            user.setName(json.get("name").asText());
+        }
+        if (json.has("phone")) {
+            user.setPhone(json.get("phone").asText());
+        }
+
+        if (user instanceof Customer) {
+            if (json.has("location")) {
+                ((Customer) user).setLocation(json.get("location").asText());
+            }
+        }
+        else if (user instanceof Provider provider) {
+
+            if (json.has("location")) {
+                provider.setLocation(json.get("location").asText());
+            }
+            if (json.has("nationalId")) {
+                provider.setNationalId(json.get("nationalId").asText());
+            }
+            if (json.has("licenseNumber")) {
+                provider.setLicenseNumber(json.get("licenseNumber").asText());
+            }
+            if (json.has("licenseExpiryDate")) {
+                provider.setLicenseExpiryDate(LocalDateTime.parse(json.get("licenseExpiryDate").asText()));
+            }
+            if (json.has("yearsOfExperience")) {
+                provider.setYearsOfExperience(json.get("yearsOfExperience").asInt());
+            }
+            if (json.has("specialization")) {
+                provider.setSpecialization(json.get("specialization").asText());
+            }
+            if (json.has("companyName")) {
+                provider.setCompanyName(json.get("companyName").asText());
+            }
+            if (json.has("isCertified")) {
+                provider.setIsCertified(json.get("isCertified").asBoolean());
+            }
+            if (json.has("profileDetails")) {
+                provider.setProfileDetails(json.get("profileDetails").asText());
+            }
+        }
+    }
+
 }
 

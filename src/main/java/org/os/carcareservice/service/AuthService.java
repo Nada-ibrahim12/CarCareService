@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    // REGISTER ADMIN
+    // ? REGISTER ADMIN
     public AuthResponse registerAdmin(AdminDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
@@ -36,7 +38,12 @@ public class AuthService {
 
         userRepository.save(admin);
 
-        String token = jwtService.generateToken(admin);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", admin.getRole().name());
+        claims.put("userId", admin.getId());
+        claims.put("lastCredentialsUpdate", admin.getLastCredentialsUpdate().getEpochSecond());
+
+        String token = jwtService.generateToken( claims , admin);
         Instant expiresAt = jwtService.extractExpiration(token).toInstant();
 
         return AuthResponse.builder()
@@ -49,7 +56,7 @@ public class AuthService {
                 .build();
     }
 
-    // REGISTER CUSTOMER
+    // ? REGISTER CUSTOMER
     public AuthResponse registerCustomer(CustomerDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
@@ -66,7 +73,12 @@ public class AuthService {
 
         userRepository.save(customer);
 
-        String token = jwtService.generateToken(customer);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", customer.getRole().name());
+        claims.put("userId", customer.getId());
+        claims.put("lastCredentialsUpdate", customer.getLastCredentialsUpdate().getEpochSecond());
+
+        String token = jwtService.generateToken(claims , customer);
         Instant expiresAt = jwtService.extractExpiration(token).toInstant();
 
         return AuthResponse.builder()
@@ -79,7 +91,7 @@ public class AuthService {
                 .build();
     }
 
-    // REGISTER PROVIDER
+    // ? REGISTER PROVIDER
     public AuthResponse registerProvider(ProviderDTO request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email already in use");
@@ -105,7 +117,12 @@ public class AuthService {
 
         userRepository.save(provider);
 
-        String token = jwtService.generateToken(provider);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", provider.getRole().name());
+        claims.put("userId", provider.getId());
+        claims.put("lastCredentialsUpdate", provider.getLastCredentialsUpdate().getEpochSecond());
+
+        String token = jwtService.generateToken(claims , provider);
         Instant expiresAt = jwtService.extractExpiration(token).toInstant();
 
         return AuthResponse.builder()
@@ -118,7 +135,7 @@ public class AuthService {
                 .build();
     }
 
-    // LOGIN (works for all roles)
+    // ? LOGIN (works for all roles)
     public AuthResponse login(LoginRequest request) {
         // authenticate credentials (will throw if invalid)
         authenticationManager.authenticate(
@@ -128,7 +145,12 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        String token = jwtService.generateToken(user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", user.getRole().name());
+        claims.put("userId", user.getId());
+        claims.put("lastCredentialsUpdate", user.getLastCredentialsUpdate().getEpochSecond());
+
+        String token = jwtService.generateToken(claims , user);
         Instant expiresAt = jwtService.extractExpiration(token).toInstant();
 
         return AuthResponse.builder()
