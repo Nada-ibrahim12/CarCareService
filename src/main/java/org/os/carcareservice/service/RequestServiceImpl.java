@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -127,6 +128,40 @@ public class RequestServiceImpl implements RequestService {
         statusChange.setStatus(status);
         statusChange.setCreatedAt(LocalDateTime.now());
         statusChangeRepository.save(statusChange);
+    }
+
+    public List<RequestResponse> getProviderRequests(Long providerId) {
+        List<Request> requests = requestRepository.findByProviderId(providerId);
+        return requests.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public RequestResponse updateStatus(Integer requestId, RequestStatus status) {
+        Request request = requestRepository.findById(requestId).orElse(null);
+        request.setStatus(status);
+        request.setUpdatedAt(LocalDateTime.now());
+        requestRepository.save(request);
+        createStatusChange(request, RequestStatus.values()[status.ordinal()]);
+        return mapToResponse(request);
+    }
+
+    public List<StatusHistoryResponse> getProviderRequestsHistory(Long providerId) {
+        List<StatusHistoryResponse> responses = new ArrayList<>();
+
+        List<Request> requests = requestRepository.findByProviderId(providerId);
+
+        for (Request request : requests) {
+            List<StatusHistoryResponse> history = statusChangeRepository
+                    .findByRequest_RequestIdOrderByCreatedAtAsc(request.getRequestId())
+                    .stream()
+                    .map(this::mapToStatusHistoryResponse)
+                    .collect(Collectors.toList());
+
+            responses.addAll(history);
+        }
+
+        return responses;
     }
 
     private RequestResponse mapToResponse(Request request) {

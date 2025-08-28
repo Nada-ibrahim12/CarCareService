@@ -3,6 +3,8 @@ package org.os.carcareservice.service;
 import org.os.carcareservice.dto.RequestRequest;
 import org.os.carcareservice.dto.RequestResponse;
 import org.os.carcareservice.dto.StatusHistoryResponse;
+import org.os.carcareservice.entity.RequestStatus;
+import org.os.carcareservice.entity.RequestStatusChange;
 
 import java.util.List;
 
@@ -15,4 +17,8 @@ public interface RequestService {
     void cancelRequest(Integer requestId);
     List<RequestResponse> getAllRequests();
     List<RequestResponse> getRequestsByStatus(String status);
+    List<RequestResponse> getProviderRequests(Long providerId);
+//    List<RequestResponse> getProviderRequestsByToken(String token);
+    RequestResponse updateStatus(Integer requestId, RequestStatus status);
+    List<StatusHistoryResponse> getProviderRequestsHistory(Long providerId);
 }

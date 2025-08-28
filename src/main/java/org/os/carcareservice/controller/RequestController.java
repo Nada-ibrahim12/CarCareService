@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.os.carcareservice.dto.RequestRequest;
 import org.os.carcareservice.dto.RequestResponse;
 import org.os.carcareservice.dto.StatusHistoryResponse;
+import org.os.carcareservice.entity.RequestStatus;
 import org.os.carcareservice.service.RequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,4 +64,13 @@ public class RequestController {
         List<RequestResponse> responses = requestService.getRequestsByStatus(status);
         return ResponseEntity.ok(responses);
     }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<RequestResponse> updateRequestStatus(
+            @PathVariable int id,
+            @RequestBody RequestStatus status) {
+        RequestResponse response = requestService.updateStatus(id, status);
+        return ResponseEntity.ok(response);
+    }
+
 }
