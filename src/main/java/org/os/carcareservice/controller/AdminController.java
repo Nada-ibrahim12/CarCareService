@@ -19,7 +19,10 @@ public class AdminController {
 
 // ! ==================================================================================================
 
-    // ? GET USER BY ID
+// ? GET USER BY ID
+
+// ? GET api/admin/users/{id}
+
     @GetMapping("/users/{id}")
     public ResponseEntity<BaseUserDTO> getUserById(@PathVariable Long id) {
         BaseUserDTO user = adminService.getUserById(id);
@@ -28,7 +31,10 @@ public class AdminController {
 
 // ! ==================================================================================================
 
-    // ? DELETE USER BY ID
+// ? DELETE USER BY ID
+
+// ? DELETE api/admin/users/{id}
+
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         adminService.deleteUser(id);
@@ -37,13 +43,18 @@ public class AdminController {
 
 // ! ==================================================================================================
 
-    // ? GET ALL USERS OR WITH SPECIFICATION
-    // ? name, role, status
-    // ? role can be ADMIN, CUSTOMER, PROVIDER
-    // ? status can be ACTIVE, INACTIVE , SUSPENDED and PENDING_VERIFICATION
-    // ? if no params are provided, all users will be returned
-    // ? if params are provided, users will be filtered by the params ( case-insensitive )
-    // ? EXAMPLE: http://localhost:8080/api/admin/users?name=EvRa&role=CusTomer&status=aCtiVe
+// ? GET ALL USERS OR WITH SPECIFICATION
+
+// ? name, role, status
+// ? role can be ADMIN, CUSTOMER, PROVIDER
+// ? status can be ACTIVE, INACTIVE , SUSPENDED and PENDING_VERIFICATION
+// ? if no params are provided, all users will be returned
+// ? if params are provided, users will be filtered by the params ( case-insensitive )
+
+// ? EXAMPLE: http://localhost:8080/api/admin/users?name=EvRa&role=CusTomer&status=aCtiVe
+
+// ? GET api/admin/users
+
     @GetMapping("/users")
     public ResponseEntity<List<BaseUserDTO>> getAllUsers(
             @RequestParam(required = false) String name,

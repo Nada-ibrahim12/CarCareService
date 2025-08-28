@@ -13,11 +13,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-
 // ! =========================================================================================
 
 // ? register ADMIN
 
+// ? POST api/auth/register/admin
 
 // ?   {
 // ?         "name": "ADMIN",
@@ -25,6 +25,7 @@ public class AuthController {
 // ?         "phone": "01155667788",
 // ?         "password": "123456"
 // ?   }
+
     @PostMapping("/register/admin")
     public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AdminDTO request) {
         return ResponseEntity.ok(authService.registerAdmin(request));
@@ -35,6 +36,8 @@ public class AuthController {
 
 // ? register CUSTOMER
 
+// ? POST api/auth/register/customer
+
 // ?   {
 // ?         "name": "customer",
 // ?         "email": "customer@example.com",
@@ -42,6 +45,7 @@ public class AuthController {
 // ?         "password": "123456",
 // ?         "location": "Haram, Giza"
 // ?   }
+
     @PostMapping("/register/customer")
     public ResponseEntity<AuthResponse> registerCustomer(@RequestBody CustomerDTO request) {
         return ResponseEntity.ok(authService.registerCustomer(request));
@@ -51,6 +55,8 @@ public class AuthController {
 // ! =========================================================================================
 
 // ? register PROVIDER
+
+// ? POST api/auth/register/provider
 
 // ?   {
 // ?         "name": "ProviderExtra",
@@ -67,6 +73,7 @@ public class AuthController {
 // ?         "isCertified": true,
 // ?         "profileDetails": "Expert in car engine repair with over 10 years of experience"
 // ?    }
+
     @PostMapping("/register/provider")
     public ResponseEntity<AuthResponse> registerProvider(@RequestBody ProviderDTO request) {
         return ResponseEntity.ok(authService.registerProvider(request));
@@ -77,11 +84,13 @@ public class AuthController {
 
 // ? login (all roles)
 
+// ? POST api/auth/login
 
 // ?     {
 // ?          "email": "ephraim@gmail.com",
 // ?         "password": "12345678"
 // ?     }
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));

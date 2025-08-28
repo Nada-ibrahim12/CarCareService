@@ -19,6 +19,12 @@ public class UserController {
 
     private final UserService userService;
 
+// ! =========================================================================================
+
+// ? GET CURRENT USER PROFILE
+
+// ? GET api/users/profile
+
     @GetMapping("/profile")
     public ResponseEntity<BaseUserDTO> getProfile(Authentication authentication) {
         String email = authentication.getName();
@@ -29,12 +35,16 @@ public class UserController {
 
 // ! =========================================================================================
 
+// ? UPDATE CURRENT USER PROFILE
+
+// ? PATCH api/users/profile
 
 // ?   Send What You Want To Update in the Body and the wrong fields will be ignored
 // ?
 // ?   {
 // ?     "location" : "Giza, Egypt"
 // ?   }
+
     @PatchMapping("/profile")
     public ResponseEntity<BaseUserDTO> updateProfile(
             Authentication authentication,
@@ -48,10 +58,14 @@ public class UserController {
 
 // ! =========================================================================================
 
+// ? UPDATE CURRENT USER EMAIL
+
+// ? PATCH api/users/profile/reset-email
 
 // ?   {
 // ?     "email" : "ephraim@gmail.com"
 // ?   }
+
     @PatchMapping("/profile/reset-email")
     public ResponseEntity<AuthResponse> updateEmail(
             Authentication authentication,
@@ -68,11 +82,13 @@ public class UserController {
 
 // ! =========================================================================================
 
+// ? RESET CURRENT USER PASSWORD
 
 // ?    {
 // ?         "oldPassword" : "123456",
 // ?         "newPassword" : "12345678"
 // ?    }
+
     @PatchMapping("/profile/reset-password")
     public ResponseEntity<AuthResponse> updatePassword(
             Authentication authentication,
@@ -90,6 +106,9 @@ public class UserController {
 
 // ! =========================================================================================
 
+// ? DELETE CURRENT USER PROFILE
+
+// ? DELETE api/users/profile
 
     @DeleteMapping("/profile")
     public ResponseEntity<String> deleteProfile(Authentication authentication) {
