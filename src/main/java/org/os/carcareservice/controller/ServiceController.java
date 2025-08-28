@@ -1,6 +1,10 @@
 package org.os.carcareservice.controller;
 
+import org.os.carcareservice.dto.ServiceDTO;
+import org.os.carcareservice.entity.Provider;
 import org.os.carcareservice.entity.Service;
+import org.os.carcareservice.repository.ProviderRepository;
+import org.os.carcareservice.service.ProviderService;
 import org.os.carcareservice.service.ServiceService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +30,8 @@ public class ServiceController {
     }
 
     @PostMapping
-    public Service create(@RequestBody Service service) {
-        return serviceService.saveService(service);
+    public Service create(@RequestBody ServiceDTO serviceDTO) {
+        return serviceService.saveService(serviceDTO);
     }
 
     @PutMapping("/{id}")

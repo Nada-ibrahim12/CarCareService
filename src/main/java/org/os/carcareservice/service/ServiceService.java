@@ -1,6 +1,9 @@
 package org.os.carcareservice.service;
 
+import org.os.carcareservice.dto.ServiceDTO;
+import org.os.carcareservice.entity.Provider;
 import org.os.carcareservice.entity.Service;
+import org.os.carcareservice.repository.ProviderRepository;
 import org.os.carcareservice.repository.ServiceRepository;
 
 import java.util.List;
@@ -8,9 +11,12 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class ServiceService {
     private final ServiceRepository serviceRepository;
+    private final ProviderRepository providerRepository;
 
-    public ServiceService(ServiceRepository serviceRepository) {
+
+    public ServiceService(ServiceRepository serviceRepository, ProviderRepository providerRepository) {
         this.serviceRepository = serviceRepository;
+        this.providerRepository = providerRepository;
     }
 
     public List<Service> getAllServices() {
@@ -21,7 +27,16 @@ public class ServiceService {
         return serviceRepository.findById(id).orElseThrow(() -> new RuntimeException("Service not found"));
     }
 
-    public Service saveService(Service service) {
+    public Service saveService(ServiceDTO serviceDTO) {
+        Service service = new Service();
+        service.setServiceName(serviceDTO.getName());
+        service.setServiceStatus(serviceDTO.getStatus());
+        service.setServicePrice(serviceDTO.getPrice());
+
+        Provider provider = providerRepository.findById(serviceDTO.getProviderId())
+                .orElseThrow(() -> new RuntimeException("Provider not found"));
+        service.setProvider(provider);
+
         return serviceRepository.save(service);
     }
 
