@@ -11,6 +11,10 @@ import java.util.List;
 @Table(name = "providers")
 public class Provider extends User {
 
+    @Column(name = "location" , nullable = false)
+    private String location;
+
+
     @Column(name = "national_id", unique = true, length = 50)
     private String nationalId;
 
@@ -56,10 +60,6 @@ public class Provider extends User {
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Notification> notifications = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    private Admin managedByAdmin;
-
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @Column(name = "updated_at", nullable = false)
@@ -88,6 +88,39 @@ public class Provider extends User {
     public Role getRole() {
         return Role.PROVIDER;
     }
+
+    public Boolean getCertified() {
+        return isCertified;
+    }
+
+    public void setCertified(Boolean certified) {
+        isCertified = certified;
+    }
+
+    public List<Availability> getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(List<Availability> availability) {
+        this.availability = availability;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
 
     public String getProfileDetails() {
         return profileDetails;
@@ -133,14 +166,6 @@ public class Provider extends User {
 
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
-    }
-
-    public Admin getManagedByAdmin() {
-        return managedByAdmin;
-    }
-
-    public void setManagedByAdmin(Admin managedByAdmin) {
-        this.managedByAdmin = managedByAdmin;
     }
 
     public void addAvailability(Availability availability) {
