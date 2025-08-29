@@ -1,5 +1,7 @@
 package org.os.carcareservice.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.os.carcareservice.dto.ReviewDTO;
 import org.os.carcareservice.dto.ReviewResponseDTO;
 import org.os.carcareservice.entity.Customer;
@@ -36,6 +38,12 @@ public class ReviewService {
     }
 
     public ReviewResponseDTO addReview(ReviewDTO reviewDTO, Long customerId, Integer requestId, Integer serviceId) {
+        // Check if customer has already reviewed this request
+        reviewRepository.findByCustomer_IdAndRequest_RequestId(customerId, requestId)
+                .ifPresent(review -> {
+                    throw new IllegalStateException("You have already reviewed this request");
+                });
+
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + customerId));
 
@@ -68,5 +76,60 @@ public class ReviewService {
         dto.setServiceId(review.getService().getServiceId());
         dto.setCreatedAt(review.getCreatedAt());
         return dto;
+    }
+
+    public List<ReviewResponseDTO> getReviewsByRequestId(Integer requestId) {
+        List<Review> reviews = reviewRepository.findByRequest_RequestId(requestId);
+        if (reviews.isEmpty()) {
+            throw new RuntimeException("No reviews found for request id: " + requestId);
+        }
+        return reviews.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public List<ReviewResponseDTO> getReviewsByProviderId(Long providerId) {
+        List<Review> reviews = reviewRepository.findByRequest_Provider_Id(providerId);
+        if (reviews.isEmpty()) {
+            throw new RuntimeException("No reviews found for provider id: " + providerId);
+        }
+        return reviews.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public List<ReviewResponseDTO> getReviewsByProviderAndMinRating(Long providerId, Integer minRating) {
+        List<Review> reviews = reviewRepository.findByProviderAndMinRating(providerId, minRating);
+        return reviews.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteReview(int reviewId) {
+        if (!reviewRepository.existsById(reviewId)) {
+            throw new RuntimeException("Review not found with id: " + reviewId);
+        }
+        reviewRepository.deleteById(reviewId);
+    }
+
+    @Transactional
+    public ReviewResponseDTO updateReview(int reviewId, ReviewDTO reviewDTO, Long customerId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found with id: " + reviewId));
+
+        // Verify the customer is the owner of the review
+        if (!review.getCustomer().getId().equals(customerId)) {
+            throw new SecurityException("You can only update your own reviews");
+        }
+
+        // Update the review fields
+        review.setRating(reviewDTO.getRating());
+        if (reviewDTO.getComments() != null) {
+            review.setComments(reviewDTO.getComments());
+        }
+
+        Review updatedReview = reviewRepository.save(review);
+        return mapToResponseDTO(updatedReview);
     }
 }
