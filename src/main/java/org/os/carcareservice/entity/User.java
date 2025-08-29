@@ -31,7 +31,7 @@ public abstract class User implements UserDetails {
 
     @NotBlank(message = "Email is required")
     @Email(message = "Please provide a valid email")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Please provide a valid phone number")
@@ -56,6 +56,7 @@ public abstract class User implements UserDetails {
 
 
     protected User() {}
+
 
     public User(String name, String email, String phone, String password) {
         this.name = name;
@@ -107,4 +108,7 @@ public abstract class User implements UserDetails {
         return status == UserStatus.ACTIVE;
     }
 
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
 }

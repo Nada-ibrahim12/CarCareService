@@ -12,8 +12,9 @@ public class RequestStatusChange {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "status", nullable = false, length = 100)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private RequestStatus status;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -31,11 +32,11 @@ public class RequestStatusChange {
         this.id = id;
     }
 
-    public String getStatus() {
+    public RequestStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(RequestStatus status) {
         this.status = status;
     }
 

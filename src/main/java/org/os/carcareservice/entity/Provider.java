@@ -14,6 +14,7 @@ public class Provider extends User {
     @Column(name = "location" , nullable = false)
     private String location;
 
+
     @Column(name = "national_id", unique = true, length = 50)
     private String nationalId;
 
@@ -47,6 +48,8 @@ public class Provider extends User {
     @Lob
     @Column(name = "profile_details", columnDefinition = "TEXT")
     private String profileDetails;
+
+
 
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Service> services = new ArrayList<>();
@@ -85,8 +88,6 @@ public class Provider extends User {
     public Role getRole() {
         return Role.PROVIDER;
     }
-
-
 
     public Boolean getCertified() {
         return isCertified;
@@ -166,7 +167,6 @@ public class Provider extends User {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
-
 
     public void addAvailability(Availability availability) {
         this.availability.add(availability);
