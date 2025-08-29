@@ -15,4 +15,5 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     @Query("SELECT r FROM Request r WHERE r.status = :status")
     List<Request> findByStatus(@Param("status") RequestStatus status);
     Request save(Request request);
+    List<Request> findByProviderIdAndStatus(Long providerId, String status);
 }

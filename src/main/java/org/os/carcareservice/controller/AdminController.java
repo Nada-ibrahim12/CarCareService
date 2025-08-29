@@ -75,4 +75,17 @@ public class AdminController {
         List<ProviderResponse> providers = adminProviderService.getProvidersByUserStatus(status);
         return ResponseEntity.ok(providers);
     }
+
+    // /requests?provider=5&status=completed
+    @GetMapping("/requests")
+    public List<Request> getBookings(
+            @RequestParam("provider") Long providerId,
+            @RequestParam("status") String status) {
+
+        if ("completed".equalsIgnoreCase(status)) {
+            return adminService.getCompletedBookingsByProvider(providerId);
+        } else {
+            throw new IllegalArgumentException("Only completed status is supported");
+        }
+    }
 }
