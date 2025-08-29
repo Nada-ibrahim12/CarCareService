@@ -65,4 +65,8 @@ public class Service {
     public void setServiceStatus(String serviceStatus) {
         this.serviceStatus = serviceStatus;
     }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
 }
