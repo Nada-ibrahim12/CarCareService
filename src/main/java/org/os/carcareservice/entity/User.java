@@ -51,7 +51,7 @@ public abstract class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
 
-    @Column(name = "last_credentials_update", nullable = false)
+    @Column(name = "last_credentials_update", nullable = true)
     private Instant lastCredentialsUpdate = Instant.now();  // ? for tracking when the email or password updated
 
 

@@ -21,6 +21,7 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminProviderService adminProviderService;
 
 // ! ==================================================================================================
 
@@ -70,14 +71,7 @@ public class AdminController {
         return ResponseEntity.ok(users);
 
     }
-  
-  private final AdminService adminService;
-    private final AdminProviderService adminProviderService;
 
-    public AdminController(AdminService adminService, AdminProviderService adminProviderService) {
-        this.adminService = adminService;
-        this.adminProviderService = adminProviderService;
-    }
 
     // GET /admin/customers
     @GetMapping("/customers")

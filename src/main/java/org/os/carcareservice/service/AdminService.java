@@ -6,6 +6,7 @@ import org.os.carcareservice.entity.User;
 import org.os.carcareservice.mappers.UserMapper;
 import org.os.carcareservice.repository.UserRepository;
 import org.os.carcareservice.specification.UserSpecification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.os.carcareservice.entity.*;
@@ -29,6 +30,7 @@ public class AdminService {
     private final ProviderRepository providerRepository;
     private final RequestRepository requestRepository;
 
+    @Autowired
     public AdminService(CustomerRepository customerRepository,
                         AuditLogRepository auditLogRepository, ProviderRepository providerRepository, RequestRepository requestRepository, UserRepository userRepository, UserMapper userMapper) {
         this.customerRepository = customerRepository;
