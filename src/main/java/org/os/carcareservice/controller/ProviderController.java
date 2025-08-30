@@ -3,6 +3,7 @@ package org.os.carcareservice.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.os.carcareservice.dto.*;
+import org.os.carcareservice.entity.User;
 import org.os.carcareservice.service.ProviderService;
 import org.os.carcareservice.service.RequestService;
 import org.os.carcareservice.service.RequestServiceImpl;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/providers")
+@RequestMapping("/api/providers")
 @RequiredArgsConstructor
 
 public class ProviderController {
@@ -34,16 +35,18 @@ public class ProviderController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ProviderResponse> updateProvider (
-//            @PathVariable Long id,
-//            @Valid
-//            @RequestBody
-//            ProviderUpdateRequest request
-//    ) {
-//        ProviderResponse response = providerService.updateProvider(id, request);
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
+    @PutMapping("/profile")
+    public ResponseEntity<ProviderResponse> updateProvider (
+            Authentication authentication,
+            @Valid
+            @RequestBody
+            ProviderUpdateRequest request
+    ) {
+        User currentUser = (User) authentication.getPrincipal();
+        Long id = currentUser.getId();
+        ProviderResponse response = providerService.updateProvider(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @GetMapping
     public ResponseEntity<List<ProviderResponse>> getAllProviders() {

@@ -15,16 +15,16 @@ public class AuthController {
 
 // ! =========================================================================================
 
-// ? register ADMIN
+//   register ADMIN
 
-// ? POST api/auth/register/admin
+//   POST api/auth/register/admin
 
-// ?   {
-// ?         "name": "ADMIN",
-// ?         "email": "ADMIN@example.com",
-// ?         "phone": "01155667788",
-// ?         "password": "123456"
-// ?   }
+//     {
+//           "name": "ADMIN",
+//           "email": "ADMIN@example.com",
+//           "phone": "01155667788",
+//           "password": "123456"
+//     }
 
     @PostMapping("/register/admin")
     public ResponseEntity<AuthResponse> registerAdmin(@RequestBody AdminDTO request) {
@@ -34,17 +34,17 @@ public class AuthController {
 
 // ! =========================================================================================
 
-// ? register CUSTOMER
+//   register CUSTOMER
 
-// ? POST api/auth/register/customer
+//   POST api/auth/register/customer
 
-// ?   {
-// ?         "name": "customer",
-// ?         "email": "customer@example.com",
-// ?         "phone": "01155667788",
-// ?         "password": "123456",
-// ?         "location": "Haram, Giza"
-// ?   }
+//     {
+//           "name": "customer",
+//           "email": "customer@example.com",
+//           "phone": "01155667788",
+//           "password": "123456",
+//           "location": "Haram, Giza"
+//     }
 
     @PostMapping("/register/customer")
     public ResponseEntity<AuthResponse> registerCustomer(@RequestBody CustomerDTO request) {
@@ -54,25 +54,25 @@ public class AuthController {
 
 // ! =========================================================================================
 
-// ? register PROVIDER
+//   register PROVIDER
 
-// ? POST api/auth/register/provider
+//   POST api/auth/register/provider
 
-// ?   {
-// ?         "name": "ProviderExtra",
-// ?         "email": "provider2@example.com",
-// ?         "phone": "01155667788",
-// ?         "password": "123456",
-// ?         "location": "Maadi, Cairo",
-// ?         "nationalId": "29812345555555",
-// ?         "licenseNumber": "ABC-123-456",
-// ?         "licenseExpiryDate": "2027-08-01T00:00:00",
-// ?         "yearsOfExperience": 10,
-// ?         "specialization": "Car Engine Repair",
-// ?         "companyName": "AutoFix",
-// ?         "isCertified": true,
-// ?         "profileDetails": "Expert in car engine repair with over 10 years of experience"
-// ?    }
+//     {
+//           "name": "ProviderExtra",
+//           "email": "provider2@example.com",
+//           "phone": "01155667788",
+//           "password": "123456",
+//           "location": "Maadi, Cairo",
+//           "nationalId": "29812345555555",
+//           "licenseNumber": "ABC-123-456",
+//           "licenseExpiryDate": "2027-08-01T00:00:00",
+//           "yearsOfExperience": 10,
+//           "specialization": "Car Engine Repair",
+//           "companyName": "AutoFix",
+//           "isCertified": true,
+//           "profileDetails": "Expert in car engine repair with over 10 years of experience"
+//      }
 
     @PostMapping("/register/provider")
     public ResponseEntity<AuthResponse> registerProvider(@RequestBody ProviderDTO request) {
@@ -82,14 +82,14 @@ public class AuthController {
 
 // ! =========================================================================================
 
-// ? login (all roles)
+//   login (all roles)
 
-// ? POST api/auth/login
+//   POST api/auth/login
 
-// ?     {
-// ?          "email": "ephraim@gmail.com",
-// ?         "password": "12345678"
-// ?     }
+//       {
+//            "email": "ephraim@gmail.com",
+//           "password": "12345678"
+//       }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {

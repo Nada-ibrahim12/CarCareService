@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/enquiries")
+@RequestMapping("/api/enquiries")
 public class EnquiryController {
 
     private final EnquiryService enquiryService;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/requests")
+@RequestMapping("/api/requests")
 @RequiredArgsConstructor
 public class RequestController {
     private final RequestService requestService;
