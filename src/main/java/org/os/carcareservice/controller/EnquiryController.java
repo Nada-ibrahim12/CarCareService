@@ -4,6 +4,7 @@ import org.os.carcareservice.entity.Enquiry;
 import org.os.carcareservice.entity.EnquiryReply;
 import org.os.carcareservice.service.EnquiryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,18 +27,21 @@ public class EnquiryController {
     }
 
     // GET /enquiries → (Admin) List all enquiries.
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Enquiry>> list() {
         return ResponseEntity.ok(enquiryService.listAll());
     }
 
     // GET /enquiries/{id} → (Admin) Get enquiry details.
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Enquiry> get(@PathVariable int id) {
         return ResponseEntity.ok(enquiryService.getById(id));
     }
 
     // DELETE /enquiries/{id} → (Admin) Delete/hide enquiry.
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         enquiryService.deleteById(id);
@@ -52,6 +56,7 @@ public class EnquiryController {
     }
 
     // POST /enquiries/{id}/reply → Admin reply to the enquiries
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/reply")
     public ResponseEntity<EnquiryReply> reply(@PathVariable int id, @RequestBody Map<String, String> body) {
         return ResponseEntity.ok(enquiryService.reply(id, body.get("message")));

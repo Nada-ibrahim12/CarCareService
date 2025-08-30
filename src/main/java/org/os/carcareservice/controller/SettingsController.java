@@ -4,6 +4,7 @@ import org.os.carcareservice.entity.Settings;
 import org.os.carcareservice.entity.SettingsLog;
 import org.os.carcareservice.service.SettingsService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,18 +26,21 @@ public class SettingsController {
     }
 
     // PUT /settings → (Admin) Update settings.
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<Settings> update(@RequestBody Settings updated) {
         return ResponseEntity.ok(settingsService.updateSettings(updated));
     }
 
     // GET /settings/preview → (Admin) Preview changes.
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/preview")
     public ResponseEntity<Settings> preview(@RequestBody Settings changes) {
         return ResponseEntity.ok(settingsService.preview(changes));
     }
 
     // GET /settings/logs → (Admin) Get settings change history.
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/logs")
     public ResponseEntity<List<SettingsLog>> logs() {
         return ResponseEntity.ok(settingsService.logs());
