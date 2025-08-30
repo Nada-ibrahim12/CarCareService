@@ -73,14 +73,23 @@ public class Provider extends User {
         this.setStatus(UserStatus.PENDING_VERIFICATION);
     }
 
-    public Provider(String name, String email, String phone, String password,
-                    UserStatus status, String profileDetails) {
+
+
+    public Provider(String name, String email, String phone, String password, String profileDetails) {
         super(name, email, phone, password);
+        this.setStatus(UserStatus.PENDING_VERIFICATION);
         this.profileDetails = profileDetails;
     }
 
     public Provider(UserStatus status, String profileDetails) {
+        this.setStatus(status);
         this.profileDetails = profileDetails;
+    }
+
+    public Provider(String name, String email, String phone, String encode, UserStatus userStatus, String profileDetails) {
+        super(name, email, phone, encode);
+        this.profileDetails = profileDetails;
+        this.setStatus(userStatus);
     }
 
     // Override from User
