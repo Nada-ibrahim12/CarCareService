@@ -130,8 +130,8 @@ public class RequestServiceImpl implements RequestService {
         statusChangeRepository.save(statusChange);
     }
 
-    public List<RequestResponse> getProviderRequests(Long providerId) {
-        List<Request> requests = requestRepository.findByProviderId(providerId);
+    public List<RequestResponse> getProviderRequests(String email) {
+        List<Request> requests = requestRepository.findByProviderEmail(email);
         return requests.stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -146,10 +146,10 @@ public class RequestServiceImpl implements RequestService {
         return mapToResponse(request);
     }
 
-    public List<StatusHistoryResponse> getProviderRequestsHistory(Long providerId) {
+    public List<StatusHistoryResponse> getProviderRequestsHistory(String email) {
         List<StatusHistoryResponse> responses = new ArrayList<>();
 
-        List<Request> requests = requestRepository.findByProviderId(providerId);
+        List<Request> requests = requestRepository.findByProviderEmail(email);
 
         for (Request request : requests) {
             List<StatusHistoryResponse> history = statusChangeRepository

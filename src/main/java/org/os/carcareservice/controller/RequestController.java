@@ -6,9 +6,12 @@ import org.os.carcareservice.dto.RequestRequest;
 import org.os.carcareservice.dto.RequestResponse;
 import org.os.carcareservice.dto.StatusHistoryResponse;
 import org.os.carcareservice.entity.RequestStatus;
+import org.os.carcareservice.entity.User;
 import org.os.carcareservice.service.RequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class RequestController {
     private final RequestService requestService;
 
+    @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping
     public ResponseEntity<RequestResponse> createRequest(
             @Valid
@@ -35,9 +39,12 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/customer/{custId}")
-    public ResponseEntity<List<RequestResponse>> getCustomerRequest(@PathVariable Long custId) {
-        List<RequestResponse> responses = requestService.getCustomerRequests(custId);
+    @PreAuthorize("hasRole('CUSTOMER')")
+    @GetMapping("/customer")
+    public ResponseEntity<List<RequestResponse>> getCustomerRequest(Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        Long userId = currentUser.getId();
+        List<RequestResponse> responses = requestService.getCustomerRequests(userId);
         return ResponseEntity.ok(responses);
     }
 

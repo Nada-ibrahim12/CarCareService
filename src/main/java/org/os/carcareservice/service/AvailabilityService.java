@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface AvailabilityService {
     List<AvailabilityResponse> getProviderAvailability(Long providerId);
-    List<AvailabilityResponse> updateProviderAvailability(Long providerId, List<AvailabilityRequest> availabilityRequests);
-    void deleteProviderAvailability(Long providerId);
+    List<AvailabilityResponse> updateProviderAvailability(String email, List<AvailabilityRequest> availabilityRequests);
+    void deleteProviderAvailability(Long id);
+    void deleteProviderAvailability(String email);
 }

@@ -17,8 +17,8 @@ public interface RequestService {
     void cancelRequest(Integer requestId);
     List<RequestResponse> getAllRequests();
     List<RequestResponse> getRequestsByStatus(String status);
-    List<RequestResponse> getProviderRequests(Long providerId);
+    List<RequestResponse> getProviderRequests(String email);
 //    List<RequestResponse> getProviderRequestsByToken(String token);
     RequestResponse updateStatus(Integer requestId, RequestStatus status);
-    List<StatusHistoryResponse> getProviderRequestsHistory(Long providerId);
+    List<StatusHistoryResponse> getProviderRequestsHistory(String email);
 }

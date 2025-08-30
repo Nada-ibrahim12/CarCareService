@@ -35,12 +35,12 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     @Transactional
-    public List<AvailabilityResponse> updateProviderAvailability(Long providerId, List<AvailabilityRequest> availabilityRequests) {
+    public List<AvailabilityResponse> updateProviderAvailability(String email, List<AvailabilityRequest> availabilityRequests) {
 
-        Provider provider = providerRepository.findById(providerId)
-                .orElseThrow(() -> new RuntimeException("Provider not found with id: " + providerId));
+        Provider provider = providerRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Provider not found with email: " + email));
 
-        availabilityRepository.deleteByProviderId(providerId);
+        availabilityRepository.deleteByProviderEmail(email);
 
         List<Availability> newAvailability = availabilityRequests.stream()
                 .map(request -> {
@@ -75,5 +75,11 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         response.setEndTime(availability.getEndTime());
         response.setIsAvailable(availability.getIsAvailable());
         return response;
+    }
+
+    @Override
+    @Transactional
+    public void deleteProviderAvailability(String email) {
+        availabilityRepository.deleteByProviderEmail(email);
     }
 }

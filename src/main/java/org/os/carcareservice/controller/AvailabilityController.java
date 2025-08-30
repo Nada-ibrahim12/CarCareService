@@ -4,9 +4,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.os.carcareservice.dto.AvailabilityRequest;
 import org.os.carcareservice.dto.AvailabilityResponse;
+import org.os.carcareservice.entity.User;
 import org.os.carcareservice.service.AvailabilityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,20 +35,24 @@ public class AvailabilityController {
 //    }
 
     // for now using provider ID, later will use token
-    @PutMapping("/{providerId}/availability")
+    @PreAuthorize("hasRole('PROVIDER')")
+    @PutMapping("/availability")
     public ResponseEntity<List<AvailabilityResponse>> updateAvailability(
-            @PathVariable Long providerId,
+            Authentication authentication,
             @Valid @RequestBody List<AvailabilityRequest> availabilityRequests) {
-
+        String email = authentication.getName();
         List<AvailabilityResponse> updatedAvailability =
-                availabilityService.updateProviderAvailability(providerId, availabilityRequests);
+                availabilityService.updateProviderAvailability(email, availabilityRequests);
 
         return ResponseEntity.ok(updatedAvailability);
     }
 
-    @DeleteMapping("/{providerId}/availability")
-    public ResponseEntity<Void> deleteAvailability(@PathVariable Long providerId) {
-        availabilityService.deleteProviderAvailability(providerId);
+    @PreAuthorize("hasRole('PROVIDER')")
+    @DeleteMapping("/availability")
+    public ResponseEntity<Void> deleteAvailability(Authentication authentication) {
+        String email = authentication.getName();
+        User currentUser = (User) authentication.getPrincipal();
+        availabilityService.deleteProviderAvailability(email);
         return ResponseEntity.noContent().build();
     }
 }

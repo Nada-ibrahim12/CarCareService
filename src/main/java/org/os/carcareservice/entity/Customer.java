@@ -33,6 +33,7 @@ public class Customer extends User {
     // Constructors
     public Customer() {
         super();
+        this.setStatus(UserStatus.ACTIVE);
     }
 
     public Customer(String name, String email, String phone, String password) {

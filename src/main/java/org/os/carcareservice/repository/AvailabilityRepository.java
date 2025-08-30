@@ -17,4 +17,5 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
     List<Availability> findByProvider(Provider provider);
     Optional<Availability> findByProviderIdAndDayOfWeek(Long providerId, DayOfWeek dayOfWeek);
     void deleteByProviderId(Long providerId);
+    void deleteByProviderEmail(String providerEmail);
 }

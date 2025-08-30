@@ -8,6 +8,7 @@ public class Admin extends User {
 
     public Admin() {
         super();
+        this.setStatus(UserStatus.ACTIVE);
     }
 
     public Admin(String name, String email, String phone, String password) {

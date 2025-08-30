@@ -6,6 +6,7 @@ import org.os.carcareservice.entity.Service;
 import org.os.carcareservice.repository.ProviderRepository;
 import org.os.carcareservice.service.ProviderService;
 import org.os.carcareservice.service.ServiceService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,16 +30,19 @@ public class ServiceController {
         return serviceService.getServiceById(id);
     }
 
+    @PreAuthorize("hasRole('PROVIDER')")
     @PostMapping
     public Service create(@RequestBody ServiceDTO serviceDTO) {
         return serviceService.saveService(serviceDTO);
     }
 
+    @PreAuthorize("hasRole('PROVIDER')")
     @PutMapping("/{id}")
     public Service update(@PathVariable Integer id, @RequestBody Service service) {
         return serviceService.updateService(id, service);
     }
 
+    @PreAuthorize("hasRole('PROVIDER')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         serviceService.deleteService(id);
