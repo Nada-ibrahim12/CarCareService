@@ -21,7 +21,12 @@ public class SettingsService {
     }
 
     public Settings getSettings() {
-        return settingsRepository.findAll().stream().findFirst().orElseGet(() -> settingsRepository.save(new Settings()));
+        return settingsRepository.findAll().stream().findFirst().orElseGet(() -> {
+            Settings defaultSettings = new Settings();
+            defaultSettings.setPlatformName("CarCare Service Platform");
+            defaultSettings.setUpdatedAt(LocalDateTime.now());
+            return settingsRepository.save(defaultSettings);
+        });
     }
 
     public Settings updateSettings(Settings updated) {

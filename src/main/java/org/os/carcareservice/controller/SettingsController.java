@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/settings")
+@RequestMapping("/api/settings")
 public class SettingsController {
 
     private final SettingsService settingsService;
@@ -30,9 +30,30 @@ public class SettingsController {
         return ResponseEntity.ok(settingsService.updateSettings(updated));
     }
 
-    // GET /settings/preview → (Admin) Preview changes.
+    // GET /api/settings/preview → (Admin) Preview changes.
     @GetMapping("/preview")
-    public ResponseEntity<Settings> preview(@RequestBody Settings changes) {
+    public ResponseEntity<Settings> preview(
+            @RequestParam(required = false) String platformName,
+            @RequestParam(required = false) String logoUrl,
+            @RequestParam(required = false) String aboutImage,
+            @RequestParam(required = false) String aboutDescription,
+            @RequestParam(required = false) String termsAndCondition,
+            @RequestParam(required = false) String facebookUrl,
+            @RequestParam(required = false) String whatsappNumber,
+            @RequestParam(required = false) String phoneNumber,
+            @RequestParam(required = false) String secondPhoneNumber) {
+        
+        Settings changes = new Settings();
+        changes.setPlatformName(platformName);
+        changes.setLogoUrl(logoUrl);
+        changes.setAboutImage(aboutImage);
+        changes.setAboutDescription(aboutDescription);
+        changes.setTermsAndCondition(termsAndCondition);
+        changes.setFacebookUrl(facebookUrl);
+        changes.setWhatsappNumber(whatsappNumber);
+        changes.setPhoneNumber(phoneNumber);
+        changes.setSecondPhoneNumber(secondPhoneNumber);
+        
         return ResponseEntity.ok(settingsService.preview(changes));
     }
 

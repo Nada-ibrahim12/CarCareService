@@ -25,6 +25,10 @@ public class Enquiry {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "submitted_by_id")
+    private User submittedBy;
+
     // Getters & Setters
     public int getEnquiryId() {
         return enquiryId;
@@ -72,5 +76,13 @@ public class Enquiry {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public User getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(User submittedBy) {
+        this.submittedBy = submittedBy;
     }
 }
