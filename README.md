@@ -93,7 +93,7 @@ mvn spring-boot:run
 ---
 
 ## 📂 Postman Collection
-[][Uploading car-care-service.postman_collection.json…]()
+[Postman Collection Link](https://drive.google.com/file/d/1kZak3x1GobIPMg9QW2Ffrz1-zgJxthIi/view)
 
 
 ---
