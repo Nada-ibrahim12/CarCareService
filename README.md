@@ -102,10 +102,10 @@ mvn spring-boot:run
 - **Nada Ibrahim** – Team Lead & Backend Developer 
   [LinkedIn Profile](https://www.linkedin.com/in/nada-ibrahim-70930725a)
 - **Ephraim Youssef** – Backend Developer
-  [GitHub Profile](https://github.com/EphraimYoussef)
+  [GitHub Profile](https://github.com/EphraimYoussef) & 
   [LinkedIn Profile](https://www.linkedin.com/in/ephraimyoussef/)
 - **Abdelrahman Kadry** – Backend Developer
-  [GitHub Profile](https://github.com/Kadry-jr)
+  [GitHub Profile](https://github.com/Kadry-jr) & 
   [LinkedIn Profile](https://www.linkedin.com/in/abdel-rahman-kadry/)
 - **Roqaia Hassan** – Backend Developer
 - **Malak** – Backend Developer 
