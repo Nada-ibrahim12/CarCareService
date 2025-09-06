@@ -6,10 +6,10 @@
 ---
 
 ## 📌 Table of Contents
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [API Endpoints](#api-endpoints)
+- Features
+- Tech Stack
+- Architecture
+- API Endpoints
 - Setup & Installation
 - Postman Collection
 - Contributors
@@ -100,11 +100,15 @@ mvn spring-boot:run
 
 ## 👩‍💻 Contributors
 - **Nada Ibrahim** – Team Lead & Backend Developer  
-LinkedIn [https://www.linkedin.com/in/nada-ibrahim-70930725a]
+  [LinkedIn Profile](https://www.linkedin.com/in/nada-ibrahim-70930725a)
 - **Ephraim Youssef** – Backend Developer 
-- **Malak** – Backend Developer 
-- **Roqaia Hassan** – Backend Developer
+  [GitHub Profile](https://github.com/EphraimYoussef)
+  [LinkedIn Profile](https://www.linkedin.com/in/ephraimyoussef/)
 - **Abdelrahman Kadry** – Backend Developer 
+  [GitHub Profile](https://github.com/Kadry-jr)
+  [LinkedIn Profile](https://www.linkedin.com/in/abdel-rahman-kadry/)
+- **Roqaia Hassan** – Backend Developer
+- **Malak** – Backend Developer 
 - **Salma** – Backend Developer 
 - **Mohamed** – Backend Developer 
 
