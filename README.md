@@ -168,6 +168,7 @@ The application will start on `http://localhost:8080`
 
 ## Contributors
 - **Nada Ibrahim** – Team Lead & Backend Developer | 
+  [GitHub Profile](https://github.com/Nada-ibrahim12) | 
   [LinkedIn Profile](https://www.linkedin.com/in/nada-ibrahim-70930725a)
 - **Ephraim Youssef** – Backend Developer | 
   [GitHub Profile](https://github.com/EphraimYoussef) | 
