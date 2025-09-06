@@ -30,7 +30,7 @@
 ## Tech Stack
 - **Backend**: Java 21, Spring Boot 3.x
 - **Database**: MySQL
-- **Authentication**: JWT
+- **Authentication**: Spring Security, JWT
 - **Tools**: Postman, IntelliJ IDEA, Jira
 - **API Testing**: Postman Collection included
 
@@ -176,7 +176,11 @@ The application will start on `http://localhost:8080`
 - **Abdelrahman Kadry** – Backend Developer | 
   [GitHub Profile](https://github.com/Kadry-jr) | 
   [LinkedIn Profile](https://www.linkedin.com/in/abdel-rahman-kadry/)
-- **Roqaia Hassan** – Backend Developer
-- **Malak** – Backend Developer 
-- **Salma** – Backend Developer 
-- **Mohamed** – Backend Developer 
+- **Roqaia Hassan** – Backend Developer |
+  [GitHub Profile](https://github.com/Roqaia2005)
+- **Malak Madboly** – Backend Developer | 
+  [GitHub Profile](https://github.com/MalakMadboly)
+- **Salma Abd-Elsamie** – Backend Developer | 
+  [GitHub Profile](https://github.com/salotch)
+- **Mohamed Mahmoud** – Backend Developer | 
+  [GitHub Profile](https://github.com/MohamedMahmoud01110)
