@@ -39,7 +39,7 @@
 ## Architecture
 ```
 Controller → Service → Repository → MySQL
-Authentication → OAuth2 + JWT
+Authentication → Spring Security + JWT
 ```
 
 ---
